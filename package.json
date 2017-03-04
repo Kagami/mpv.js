@@ -1,0 +1,25 @@
+{
+  "name": "mpv.js",
+  "version": "0.0.0",
+  "description": "mpv pepper plugin",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kagami/mpv.js.git"
+  },
+  "keywords": [
+    "mpv",
+    "pepper",
+    "ppapi",
+    "electron",
+    "nw.js",
+    "video",
+    "player"
+  ],
+  "author": "Kagami Hiiragi",
+  "license": "CC0-1.0",
+  "bugs": {
+    "url": "https://github.com/Kagami/mpv.js/issues"
+  },
+  "homepage": "https://github.com/Kagami/mpv.js#readme"
+}
