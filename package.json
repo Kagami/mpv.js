@@ -1,6 +1,6 @@
 {
   "name": "mpv.js",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "mpv pepper plugin",
   "main": "index.js",
   "repository": {
