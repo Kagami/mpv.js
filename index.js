@@ -1,6 +1,6 @@
 const React = require("react");
 
-export default class extends React.PureComponent {
+module.exports = class extends React.PureComponent {
   componentDidMount() {
     this.refs.plugin.addEventListener("message", this.handleMessage, false);
   }
