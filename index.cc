@@ -3,6 +3,7 @@
 #include <string.h>
 #include <locale.h>
 #include <string>
+#include <vector>
 #include <unordered_map>
 #define GL_GLEXT_PROTOTYPES
 #include <GLES2/gl2.h>
@@ -163,12 +164,24 @@ class MPVInstance : public pp::Instance {
     OnGetFrame(0);
   }
 
-  virtual void HandleMessage(const Var& message) {
-    pp::VarDictionary dict(message);
+  virtual void HandleMessage(const Var& msg) {
+    pp::VarDictionary dict(msg);
     std::string type = dict.Get("type").AsString();
     pp::Var data = dict.Get("data");
 
-    if (type == "set_property") {
+    if (type == "run_command") {
+      pp::VarArray args(data);
+      uint32_t len = args.GetLength();
+      std::vector<std::string> args_str(len);
+      std::vector<const char*> args_ptr(len + 1);
+      for (uint32_t i = 0; i < len; i++) {
+        std::string arg = args.Get(i).AsString();
+        args_str[i] = arg;
+        args_ptr[i] = arg.c_str();
+      }
+      args_ptr[len] = NULL;
+      mpv_command(mpv_, args_ptr.data());
+    } else if (type == "set_property") {
       pp::VarDictionary data_dict(data);
       std::string name = data_dict.Get("name").AsString();
       pp::Var value = data_dict.Get("value");
@@ -205,6 +218,13 @@ class MPVInstance : public pp::Instance {
     PostMessage(dict);
   }
 
+  void PostPropertyChange(const char* name, const Var& value) {
+    pp::VarDictionary dict;
+    dict.Set(Var("name"), Var(name));
+    dict.Set(Var("value"), value);
+    PostData("property_change", dict);
+  }
+
   void HandleMPVEvents(int32_t) {
     for (;;) {
       mpv_event* event = mpv_wait_event(mpv_, 0);
@@ -219,13 +239,13 @@ class MPVInstance : public pp::Instance {
   void HandleMPVPropertyChange(mpv_event_property* prop) {
     if (prop->format == MPV_FORMAT_FLAG) {
       bool value = *static_cast<int*>(prop->data);
-      PostData(prop->name, Var(value));
+      PostPropertyChange(prop->name, Var(value));
     } else if (prop->format == MPV_FORMAT_INT64) {
       int64_t value = *static_cast<int64_t*>(prop->data);
-      PostData(prop->name, Var(static_cast<int32_t>(value)));
+      PostPropertyChange(prop->name, Var(static_cast<int32_t>(value)));
     } else if (prop->format == MPV_FORMAT_DOUBLE) {
       double value = *static_cast<double*>(prop->data);
-      PostData(prop->name, Var(value));
+      PostPropertyChange(prop->name, Var(value));
     }
   }
 
@@ -265,9 +285,12 @@ class MPVInstance : public pp::Instance {
     if (!mpv_)
       DIE("context init failed");
 
+    char* terminal = getenv("MPVJS_TERMINAL");
+    if (terminal && strlen(terminal))
+      mpv_set_option_string(mpv_, "terminal", "yes");
     char* verbose = getenv("MPVJS_VERBOSE");
     if (verbose && strlen(verbose))
-      mpv_set_option_string(mpv_, "terminal", "yes");
+      mpv_set_option_string(mpv_, "msg-level", "all=v");
 
     // Can't be set after initialize in mpv 0.18.
     mpv_set_option_string(mpv_, "input-default-bindings", "yes");
@@ -303,6 +326,7 @@ class MPVInstance : public pp::Instance {
     mpv_observe_property(mpv_, 0, "volume", MPV_FORMAT_DOUBLE);
     mpv_observe_property(mpv_, 0, "eof-reached", MPV_FORMAT_FLAG);
     mpv_observe_property(mpv_, 0, "deinterlace", MPV_FORMAT_FLAG);
+    mpv_observe_property(mpv_, 0, "duration", MPV_FORMAT_DOUBLE);
 
     return true;
   }
