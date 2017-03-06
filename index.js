@@ -1,11 +1,47 @@
 const React = require("react");
 
-module.exports = class extends React.PureComponent {
+module.exports = class extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleMessage = this.handleMessage.bind(this);
+  }
   componentDidMount() {
     this.refs.plugin.addEventListener("message", this.handleMessage, false);
   }
   componentWillUnmount() {
     this.refs.plugin.removeEventListener("message", this.handleMessage, false);
+  }
+  handleMessage(e) {
+    const msg = e.data;
+    const {type, data} = msg;
+    switch (type) {
+    case "pause":
+      this.props.onPlayPause(data);
+      break;
+    case "time-pos":
+      this.props.onTime(Math.max(0, data));
+      break;
+    case "volume":
+      this.props.onVolume({volume: Math.floor(data)});
+      break;
+    case "mute":
+      this.props.onVolume({mute: data});
+      break;
+    case "eof-reached":
+      if (data) {
+        this.props.onEOF();
+      }
+      break;
+    case "deinterlace":
+      this.props.onDeinterlace(data);
+      break;
+    case "sid":
+      // mpv actually doesn't send sid=0 ever, check just in case.
+      if (data > 0) {
+        this.props.onSubTrack(data - 1);
+      }
+      break;
+    }
   }
   play() {
     this.postData("pause", false);
@@ -77,46 +113,13 @@ module.exports = class extends React.PureComponent {
       // Don't break functionality when plugin failed to init.
     }
   }
-  handleMessage = (e) => {
-    const msg = e.data;
-    const {type, data} = msg;
-    switch (type) {
-    case "pause":
-      this.props.onPlayPause(data);
-      break;
-    case "time-pos":
-      this.props.onTime(Math.max(0, data));
-      break;
-    case "volume":
-      this.props.onVolume({volume: Math.floor(data)});
-      break;
-    case "mute":
-      this.props.onVolume({mute: data});
-      break;
-    case "eof-reached":
-      if (data) {
-        this.props.onEOF();
-      }
-      break;
-    case "deinterlace":
-      this.props.onDeinterlace(data);
-      break;
-    case "sid":
-      // mpv actually doesn't send sid=0 ever, check just in case.
-      if (data > 0) {
-        this.props.onSubTrack(data - 1);
-      }
-      break;
-    }
-  };
   render() {
-    return (
-      <embed
-        ref="plugin"
-        type="application/x-mpvjs"
-        style={{display: "block", width: "100%", height: "100%"}}
-        data-src={this.props.src}
-      />
-    );
+    const defaultStyle = {display: "block", width: "100%", height: "100%"};
+    return React.createElement("embed", {
+      ref: "plugin",
+      type: "application/x-mpvjs",
+      style: Object.assign(defaultStyle, this.props.style),
+      "data-src": this.props.src,
+    });
   }
 }

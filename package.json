@@ -3,6 +3,10 @@
   "version": "0.0.1",
   "description": "mpv pepper plugin",
   "main": "index.js",
+  "scripts": {
+    "example": "electron example",
+    "fix-linux-ld": "cp build/Release/ffmpeg57.node node_modules/electron/dist/libffmpeg.so"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Kagami/mpv.js.git"
@@ -21,5 +25,15 @@
   "bugs": {
     "url": "https://github.com/Kagami/mpv.js/issues"
   },
-  "homepage": "https://github.com/Kagami/mpv.js#readme"
+  "homepage": "https://github.com/Kagami/mpv.js#readme",
+  "peerDependencies": {
+    "react": ">=0.13.0 <16.0.0"
+  },
+  "devDependencies": {
+    "babel-standalone": "^6.23.1",
+    "electron": "1.4.15",
+    "electron-debug": "^1.1.0",
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2"
+  }
 }
