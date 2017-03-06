@@ -164,47 +164,26 @@ class MPVInstance : public pp::Instance {
   }
 
   virtual void HandleMessage(const Var& message) {
-    if (!message.is_dictionary())
-      return;
     pp::VarDictionary dict(message);
     std::string type = dict.Get("type").AsString();
     pp::Var data = dict.Get("data");
 
-    if (type == "pause") {
-      int pause = data.AsBool();
-      mpv_set_property(mpv_, "pause", MPV_FORMAT_FLAG, &pause);
-    } else if (type == "seek") {
-      double time = data.AsDouble();
-      mpv_set_property(mpv_, "time-pos", MPV_FORMAT_DOUBLE, &time);
-    } else if (type == "volume") {
+    if (type == "set_property") {
       pp::VarDictionary data_dict(data);
-      double volume = data_dict.Get("volume").AsDouble();
-      int mute = data_dict.Get("mute").AsBool();
-      mpv_set_property(mpv_, "volume", MPV_FORMAT_DOUBLE, &volume);
-      mpv_set_property(mpv_, "mute", MPV_FORMAT_FLAG, &mute);
-    } else if (type == "keypress") {
-      std::string key = data.AsString();
-      const char* cmd[] = {"keypress", key.c_str(), NULL};
-      mpv_command(mpv_, cmd);
-    } else if (type == "deinterlace") {
-      int deinterlace = data.AsBool();
-      mpv_set_property(mpv_, "deinterlace", MPV_FORMAT_FLAG, &deinterlace);
-    } else if (type == "sid") {
-      pp::VarDictionary data_dict(data);
-      int64_t id = data_dict.Get("id").AsInt();
-      Var path = data_dict.Get("path");
-      if (path.is_null()) {
-        mpv_set_property(mpv_, "sid", MPV_FORMAT_INT64, &id);
-      } else {
-        std::string str_id = std::to_string(id);
-        const char* cmd_remove[] = {"sub-remove", str_id.c_str(), NULL};
-        mpv_command(mpv_, cmd_remove);
-        const char* cmd_add[] = {"sub-add", path.AsString().c_str(), NULL};
-        mpv_command(mpv_, cmd_add);
+      std::string name = data_dict.Get("name").AsString();
+      pp::Var value = data_dict.Get("value");
+      if (value.is_bool()) {
+        int value_bool = value.AsBool();
+        mpv_set_property(mpv_, name.c_str(), MPV_FORMAT_FLAG, &value_bool);
+      } else if (value.is_string()) {
+        std::string value_string = value.AsString();
+        void* value_ptr = const_cast<void*>(
+            static_cast<const void*>(value_string.c_str()));
+        mpv_set_property(mpv_, name.c_str(), MPV_FORMAT_STRING, value_ptr);
+      } else if (value.is_number()) {
+        double value_number = value.AsDouble();
+        mpv_set_property(mpv_, name.c_str(), MPV_FORMAT_DOUBLE, &value_number);
       }
-    } else if (type == "frame-step" || type == "frame-back-step") {
-      const char* cmd[] = {type.c_str(), NULL};
-      mpv_command(mpv_, cmd);
     }
   }
 

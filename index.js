@@ -11,6 +11,15 @@ module.exports = class extends React.Component {
   componentWillUnmount() {
     this.refs.plugin.removeEventListener("message", this.handleMessage, false);
   }
+  componentWillReceiveProps(nextProps) {
+    Object.keys(nextProps).forEach(name => {
+      const oldValue = this.props[name];
+      const value = nextProps[name];
+      if (value !== oldValue) {
+        this.postData("set_property", {name, value});
+      }
+    });
+  }
   handleMessage(e) {
     const msg = e.data;
     const {type, data} = msg;
@@ -42,38 +51,6 @@ module.exports = class extends React.Component {
       }
       break;
     }
-  }
-  play() {
-    this.postData("pause", false);
-  }
-  pause() {
-    this.postData("pause", true);
-  }
-  togglePause() {
-    // Workaround to avoid extra frame being rendered after pause. See:
-    // <https://github.com/mpv-player/mpv/issues/4152>. Fixed in 0.25+,
-    // keep this for compatibility with older versions.
-    this.postData("keypress", "SPACE");
-  }
-  seek(time) {
-    this.postData("seek", time);
-  }
-  setVolume({volume, mute}) {
-    this.postData("volume", {volume, mute});
-  }
-  setDeinterlace(deinterlace) {
-    this.postData("deinterlace", deinterlace);
-  }
-  setSub({strackn, extSubPath}) {
-    const id = strackn + 1;
-    const path = extSubPath || null;
-    this.postData("sid", {id, path});
-  }
-  frameStep() {
-    this.postData("frame-step", null);
-  }
-  frameBackStep() {
-    this.postData("frame-back-step", null);
   }
   sendKey({key, shiftKey, ctrlKey, altKey}) {
     // Don't need modifier events.
@@ -115,11 +92,12 @@ module.exports = class extends React.Component {
   }
   render() {
     const defaultStyle = {display: "block", width: "100%", height: "100%"};
-    return React.createElement("embed", {
+    const props = Object.assign({}, this.props, {
       ref: "plugin",
       type: "application/x-mpvjs",
       style: Object.assign(defaultStyle, this.props.style),
       "data-src": this.props.src,
     });
+    return React.createElement("embed", props);
   }
 }
