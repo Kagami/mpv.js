@@ -4,6 +4,7 @@
   "description": "mpv pepper plugin",
   "main": "index.js",
   "scripts": {
+    "test": "eslint .",
     "example": "electron example",
     "fix-linux-ld": "cp build/Release/ffmpeg57.node node_modules/electron/dist/libffmpeg.so"
   },
@@ -33,6 +34,8 @@
     "babel-standalone": "^6.23.1",
     "electron": "1.4.15",
     "electron-debug": "^1.1.0",
+    "eslint": "^3.17.0",
+    "eslint-plugin-react": "^6.10.0",
     "react": "^15.4.2",
     "react-dom": "^15.4.2"
   }

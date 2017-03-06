@@ -26,10 +26,12 @@ class Main extends React.PureComponent {
             pause={this.state.pause}
             time-pos={this.state.timePos}
           />
-          <div className="overlay" onClick={this.togglePause}></div>
+          <div className="overlay" onClick={this.togglePause} />
         </div>
         <div className="controls">
-          <button className="control" onClick={this.togglePause}>{this.state.pause ? "▶" : "▮▮"}</button>
+          <button className="control" onClick={this.togglePause}>
+            {this.state.pause ? "▶" : "▮▮"}
+          </button>
           <button className="control" onClick={this.stop}>■</button>
           <input type="range" className="seek" />
           <button className="control" onClick={this.loadFile}>⏏</button>

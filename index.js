@@ -100,4 +100,4 @@ module.exports = class extends React.Component {
     });
     return React.createElement("embed", props);
   }
-}
+};
