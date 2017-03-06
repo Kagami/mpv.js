@@ -110,7 +110,6 @@ class MPVInstance : public pp::Instance {
         callback_factory_(this),
         mpv_(NULL),
         mpv_gl_(NULL),
-        src_(NULL),
         width_(0),
         height_(0),
         gl_ready_(false),
@@ -123,25 +122,13 @@ class MPVInstance : public pp::Instance {
       mpv_opengl_cb_uninit_gl(mpv_gl_);
     }
     mpv_terminate_destroy(mpv_);
-    delete[] src_;
   }
 
-  virtual bool Init(uint32_t argc, const char* argn[], const char* argv[]) {
-    for (uint32_t i = 0; i < argc; i++) {
-      if (strcmp(argn[i], "data-src") == 0) {
-        src_ = new char[strlen(argv[i]) + 1];
-        strcpy(src_, argv[i]);
-        break;
-      }
-    }
-    if (!src_)
-      return false;
-
+  virtual bool Init(uint32_t, const char**, const char**) {
     if (!InitGL())
       return false;
     if (!InitMPV())
       return false;
-
     return true;
   }
 
@@ -165,6 +152,9 @@ class MPVInstance : public pp::Instance {
   }
 
   virtual void HandleMessage(const Var& msg) {
+    if (!gl_ready_)
+      return;
+
     pp::VarDictionary dict(msg);
     std::string type = dict.Get("type").AsString();
     pp::Var data = dict.Get("data");
@@ -334,9 +324,7 @@ class MPVInstance : public pp::Instance {
   void LoadMPV() {
     mpv_set_wakeup_callback(mpv_, HandleMPVWakeup, this);
     mpv_opengl_cb_set_update_callback(mpv_gl_, HandleMPVUpdate, this);
-
-    const char* cmd[] = {"loadfile", src_, NULL};
-    mpv_command(mpv_, cmd);
+    PostData("ready", Var::Null());
   }
 
   void OnGetFrame(int32_t) {
@@ -369,7 +357,6 @@ class MPVInstance : public pp::Instance {
   pp::Graphics3D context_;
   mpv_handle* mpv_;
   mpv_opengl_cb_context* mpv_gl_;
-  char* src_;
   int32_t width_;
   int32_t height_;
   bool gl_ready_;

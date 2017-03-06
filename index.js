@@ -42,7 +42,7 @@ module.exports = class extends React.Component {
     this.command("keypress", key);
   }
 
-  // PRIVATE METHODS. DO NOT USE!
+  // PRIVATE METHODS, DO NOT USE!
 
   constructor(props) {
     super(props);
@@ -50,11 +50,6 @@ module.exports = class extends React.Component {
   }
   componentDidMount() {
     this.refs.plugin.addEventListener("message", this.handleMessage, false);
-    // Caller might use refs instead but this is more robust and will
-    // work in case of HOC.
-    if (this.props.onComponentMount) {
-      this.props.onComponentMount(this);
-    }
   }
   componentWillUnmount() {
     this.refs.plugin.removeEventListener("message", this.handleMessage, false);
@@ -64,6 +59,8 @@ module.exports = class extends React.Component {
     const {type, data} = msg;
     if (type === "property_change" && this.props.onPropertyChange) {
       this.props.onPropertyChange(data);
+    } else if (type === "ready" && this.props.onReady) {
+      this.props.onReady(this);
     }
   }
   postData(type, data) {
