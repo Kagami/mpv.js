@@ -83,8 +83,8 @@ class Main extends React.PureComponent {
           </button>
           <button className="control" onClick={this.handleStop}>■</button>
           <input
-            type="range"
             className="seek"
+            type="range"
             min={0}
             step={0.1}
             max={this.state.duration}
