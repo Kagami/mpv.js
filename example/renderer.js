@@ -8,10 +8,11 @@ class Main extends React.PureComponent {
   constructor(props) {
     super(props);
     this.mpv = null;
-    this.state = {pause: true, "time-pos": 0, duration: 0};
+    this.state = {pause: true, "time-pos": 0, duration: 0, fullscreen: false};
     this.handleKeyDown = this.handleKeyDown.bind(this);
     this.handleMPVReady = this.handleMPVReady.bind(this);
     this.handlePropertyChange = this.handlePropertyChange.bind(this);
+    this.toggleFullscreen = this.toggleFullscreen.bind(this);
     this.togglePause = this.togglePause.bind(this);
     this.handleStop = this.handleStop.bind(this);
     this.handleSeek = this.handleSeek.bind(this);
@@ -26,8 +27,12 @@ class Main extends React.PureComponent {
     document.removeEventListener("keydown", this.handleKeyDown, false);
   }
   handleKeyDown(e) {
-    if (!this.state.duration) return;
-    this.mpv.keypress(e);
+    e.preventDefault();
+    if (e.key === "f" || (e.key === "Escape" && this.state.fullscreen)) {
+      this.toggleFullscreen();
+    } else if (this.state.duration) {
+      this.mpv.keypress(e);
+    }
   }
   handleMPVReady(mpv) {
     this.mpv = mpv;
@@ -36,6 +41,14 @@ class Main extends React.PureComponent {
   handlePropertyChange({name, value}) {
     if (name === "time-pos" && this.seeking) return;
     this.setState({[name]: value});
+  }
+  toggleFullscreen() {
+    if (this.state.fullscreen) {
+      document.webkitExitFullscreen();
+    } else {
+      this.mpv.fullscreen();
+    }
+    this.setState({fullscreen: !this.state.fullscreen});
   }
   togglePause(e) {
     e.target.blur();

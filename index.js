@@ -15,7 +15,7 @@ class MPV extends React.Component {
   keypress({key, shiftKey, ctrlKey, altKey}) {
     // Don't need modifier events.
     if ([
-      "Shift", "Control", "Alt",
+      "Escape", "Shift", "Control", "Alt",
       "Compose", "CapsLock", "Meta",
     ].includes(key)) return;
 
@@ -40,6 +40,14 @@ class MPV extends React.Component {
     ].includes(key)) return;
 
     this.command("keypress", key);
+  }
+
+  fullscreen() {
+    this.node().webkitRequestFullscreen();
+  }
+
+  node() {
+    return this.refs.plugin;
   }
 
   // PRIVATE METHODS, DO NOT USE!
