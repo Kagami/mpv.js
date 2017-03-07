@@ -12,6 +12,10 @@ class MPV extends React.Component {
     this.postData("set_property", {name, value});
   }
 
+  observe(name) {
+    this.postData("observe_property", name);
+  }
+
   keypress({key, shiftKey, ctrlKey, altKey}) {
     // Don't need modifier events.
     if ([

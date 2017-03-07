@@ -36,6 +36,8 @@ class Main extends React.PureComponent {
   }
   handleMPVReady(mpv) {
     this.mpv = mpv;
+    const observe = mpv.observe.bind(mpv);
+    ["pause", "time-pos", "duration", "eof-reached"].forEach(observe);
     this.mpv.command("loadfile", path.join(__dirname, "tos.mkv"));
   }
   handlePropertyChange({name, value}) {

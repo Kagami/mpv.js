@@ -175,18 +175,24 @@ class MPVInstance : public pp::Instance {
       pp::VarDictionary data_dict(data);
       std::string name = data_dict.Get("name").AsString();
       pp::Var value = data_dict.Get("value");
-      if (value.is_bool()) {
-        int value_bool = value.AsBool();
-        mpv_set_property(mpv_, name.c_str(), MPV_FORMAT_FLAG, &value_bool);
-      } else if (value.is_string()) {
+      if (value.is_string()) {
         std::string value_string = value.AsString();
         void* value_ptr = const_cast<void*>(
             static_cast<const void*>(value_string.c_str()));
         mpv_set_property(mpv_, name.c_str(), MPV_FORMAT_STRING, value_ptr);
-      } else if (value.is_number()) {
-        double value_number = value.AsDouble();
-        mpv_set_property(mpv_, name.c_str(), MPV_FORMAT_DOUBLE, &value_number);
+      } else if (value.is_bool()) {
+        int value_bool = value.AsBool();
+        mpv_set_property(mpv_, name.c_str(), MPV_FORMAT_FLAG, &value_bool);
+      } else if (value.is_int()) {
+        int64_t value_int = value.AsInt();
+        mpv_set_property(mpv_, name.c_str(), MPV_FORMAT_INT64, &value_int);
+      } else if (value.is_double()) {
+        double value_double = value.AsDouble();
+        mpv_set_property(mpv_, name.c_str(), MPV_FORMAT_DOUBLE, &value_double);
       }
+    } else if (type == "observe_property") {
+      std::string name = data.AsString();
+      mpv_observe_property(mpv_, 0, name.c_str(), MPV_FORMAT_NODE);
     }
   }
 
@@ -227,15 +233,21 @@ class MPVInstance : public pp::Instance {
   }
 
   void HandleMPVPropertyChange(mpv_event_property* prop) {
-    if (prop->format == MPV_FORMAT_FLAG) {
-      bool value = *static_cast<int*>(prop->data);
-      PostPropertyChange(prop->name, Var(value));
-    } else if (prop->format == MPV_FORMAT_INT64) {
-      int64_t value = *static_cast<int64_t*>(prop->data);
-      PostPropertyChange(prop->name, Var(static_cast<int32_t>(value)));
-    } else if (prop->format == MPV_FORMAT_DOUBLE) {
-      double value = *static_cast<double*>(prop->data);
-      PostPropertyChange(prop->name, Var(value));
+    // We subscribe only on MPV_FORMAT_NODE format because that way we
+    // don't need to know type of properties.
+    if (prop->format != MPV_FORMAT_NODE)
+      return;
+    mpv_node* node = static_cast<mpv_node*>(prop->data);
+    if (node->format == MPV_FORMAT_NONE) {
+      PostPropertyChange(prop->name, Var::Null());
+    } else if (node->format == MPV_FORMAT_STRING) {
+      PostPropertyChange(prop->name, Var(node->u.string));
+    } else if (node->format == MPV_FORMAT_FLAG) {
+      PostPropertyChange(prop->name, Var(static_cast<bool>(node->u.flag)));
+    } else if (node->format == MPV_FORMAT_INT64) {
+      PostPropertyChange(prop->name, Var(static_cast<int32_t>(node->u.int64)));
+    } else if (node->format == MPV_FORMAT_DOUBLE) {
+      PostPropertyChange(prop->name, Var(node->u.double_));
     }
   }
 
@@ -301,6 +313,7 @@ class MPVInstance : public pp::Instance {
     if (mpv_set_option_string(mpv_, "vo", "opengl-cb") < 0)
       DIE("failed to set VO");
 
+    // Some convenient defaults. Can be always changed on ready event.
     mpv_set_option_string(mpv_, "vf-defaults", "yadif=interlaced-only=no");
     mpv_set_option_string(mpv_, "stop-playback-on-init-failure", "no");
     mpv_set_option_string(mpv_, "audio-file-auto", "no");
@@ -308,15 +321,6 @@ class MPVInstance : public pp::Instance {
     mpv_set_option_string(mpv_, "volume-max", "100");
     mpv_set_option_string(mpv_, "keep-open", "yes");
     mpv_set_option_string(mpv_, "osd-bar", "no");
-
-    mpv_observe_property(mpv_, 0, "sid", MPV_FORMAT_INT64);
-    mpv_observe_property(mpv_, 0, "pause", MPV_FORMAT_FLAG);
-    mpv_observe_property(mpv_, 0, "time-pos", MPV_FORMAT_DOUBLE);
-    mpv_observe_property(mpv_, 0, "mute", MPV_FORMAT_FLAG);
-    mpv_observe_property(mpv_, 0, "volume", MPV_FORMAT_DOUBLE);
-    mpv_observe_property(mpv_, 0, "eof-reached", MPV_FORMAT_FLAG);
-    mpv_observe_property(mpv_, 0, "deinterlace", MPV_FORMAT_FLAG);
-    mpv_observe_property(mpv_, 0, "duration", MPV_FORMAT_DOUBLE);
 
     return true;
   }
