@@ -39,8 +39,13 @@ class Main extends React.PureComponent {
     this.mpv.command("loadfile", path.join(__dirname, "tos.mkv"));
   }
   handlePropertyChange({name, value}) {
-    if (name === "time-pos" && this.seeking) return;
-    this.setState({[name]: value});
+    if (name === "time-pos" && this.seeking) {
+      return;
+    } else if (name === "eof-reached" && value) {
+      this.mpv.property("time-pos", 0);
+    } else {
+      this.setState({[name]: value});
+    }
   }
   toggleFullscreen() {
     if (this.state.fullscreen) {
