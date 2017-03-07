@@ -6,7 +6,17 @@ Pepper plugin for Electron/NW.js applications providing video playback for a gre
 
 ## Usage
 
-See [boram](https://github.com/Kagami/boram) for usage example.
+## Examples
+
+### [Simple player](example/)
+
+![](example/shot.png)
+
+Primitive Electron application yet capable of handling pretty much any available video thanks to mpv.
+
+## Applications using mpv.js
+
+* [boram](https://github.com/Kagami/boram)
 
 ## License
 
