@@ -57,14 +57,14 @@ class Main extends React.PureComponent {
     this.seeking = false;
   }
   handleLoad() {
-    const paths = remote.dialog.showOpenDialog({
+    const items = remote.dialog.showOpenDialog({
       filters: [
         {name: "Videos", extensions: ["mkv", "mp4", "mov", "avi"]},
         {name: "All files", extensions: ["*"]},
       ],
     });
-    if (paths) {
-      this.mpv.command("loadfile", paths[0]);
+    if (items) {
+      this.mpv.command("loadfile", items[0]);
     }
   }
   render() {
