@@ -1,11 +1,11 @@
 const React = require("react");
 
-module.exports = class extends React.Component {
+class MPV extends React.Component {
   // PUBLIC API.
 
   command(cmd, ...args) {
     args = args.map(arg => arg.toString());
-    this.postData("run_command", [cmd].concat(args));
+    this.postData("command", [cmd].concat(args));
   }
 
   property(name, value) {
@@ -32,8 +32,7 @@ module.exports = class extends React.Component {
       key = `Alt+${key}`;
     }
 
-    // Ignore exit keys for default keybindings settings. Kludgy but mpv
-    // don't propose anything better.
+    // Ignore exit keys for default keybindings settings.
     if ([
       "q", "Q", "ESC", "POWER", "STOP",
       "CLOSE_WIN", "CLOSE_WIN", "Ctrl+c",
@@ -77,4 +76,15 @@ module.exports = class extends React.Component {
       style: Object.assign(defaultStyle, this.props.style),
     });
   }
+}
+
+MPV.propTypes = {
+  className: React.PropTypes.string,
+  style: React.PropTypes.object,
+  onReady: React.PropTypes.func,
+  onPropertyChange: React.PropTypes.func,
+};
+
+module.exports = {
+  react: {MPV},
 };

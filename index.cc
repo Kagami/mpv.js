@@ -159,7 +159,7 @@ class MPVInstance : public pp::Instance {
     std::string type = dict.Get("type").AsString();
     pp::Var data = dict.Get("data");
 
-    if (type == "run_command") {
+    if (type == "command") {
       pp::VarArray args(data);
       uint32_t len = args.GetLength();
       std::vector<std::string> args_str(len);

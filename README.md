@@ -14,7 +14,7 @@ Pepper plugin for Electron/NW.js applications providing video playback for a gre
 
 ```bash
 git clone https://github.com/Kagami/mpv.js.git && cd mpv.js
-npm i
+npm install
 npm run example
 ```
 
