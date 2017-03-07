@@ -6,13 +6,11 @@ Pepper plugin for Electron/NW.js applications providing video playback for a gre
 
 ## Usage
 
-## Examples
-
-### [Simple player](example/)
+## Example
 
 ![](example/shot.png)
 
-Primitive Electron application yet capable of handling pretty much any available video thanks to mpv.
+[Simple Electron application](example) yet capable of handling pretty much any available video thanks to mpv.
 
 ## Applications using mpv.js
 
