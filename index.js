@@ -46,6 +46,10 @@ class MPV extends React.Component {
     this.node().webkitRequestFullscreen();
   }
 
+  destroy() {
+    this.node().remove();
+  }
+
   node() {
     return this.refs.plugin;
   }
@@ -57,10 +61,10 @@ class MPV extends React.Component {
     this.handleMessage = this.handleMessage.bind(this);
   }
   componentDidMount() {
-    this.refs.plugin.addEventListener("message", this.handleMessage, false);
+    this.node().addEventListener("message", this.handleMessage, false);
   }
   componentWillUnmount() {
-    this.refs.plugin.removeEventListener("message", this.handleMessage, false);
+    this.node().removeEventListener("message", this.handleMessage, false);
   }
   handleMessage(e) {
     const msg = e.data;
@@ -73,7 +77,7 @@ class MPV extends React.Component {
   }
   postData(type, data) {
     const msg = {type, data};
-    this.refs.plugin.postMessage(msg);
+    this.node().postMessage(msg);
   }
   render() {
     const defaultStyle = {display: "block", width: "100%", height: "100%"};
