@@ -69,11 +69,12 @@ module.exports = class extends React.Component {
     this.refs.plugin.postMessage(msg);
   }
   render() {
+    const defaultStyle = {display: "block", width: "100%", height: "100%"};
     return React.createElement("embed", {
       ref: "plugin",
       type: "application/x-mpvjs",
-      style: {display: "block", width: "100%", height: "100%"},
-      "data-src": this.props.src,
+      className: this.props.className,
+      style: Object.assign(defaultStyle, this.props.style),
     });
   }
 };

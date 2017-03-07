@@ -8,7 +8,7 @@ Pepper plugin for Electron/NW.js applications providing video playback for a gre
 
 ## Example
 
-![](example/shot.png)
+![](https://raw.githubusercontent.com/Kagami/mpv.js/master/example/shot.png)
 
 [Simple Electron application](example) yet capable of handling pretty much any available video thanks to mpv.
 

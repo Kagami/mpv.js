@@ -37,18 +37,22 @@ class Main extends React.PureComponent {
     if (name === "time-pos" && this.seeking) return;
     this.setState({[name]: value});
   }
-  togglePause() {
+  togglePause(e) {
+    e.target.blur();
     if (!this.state.duration) return;
     this.mpv.property("pause", !this.state.pause);
   }
-  handleStop() {
+  handleStop(e) {
+    e.target.blur();
+    this.mpv.property("pause", true);
     this.mpv.command("stop");
-    this.setState({pause: true, "time-pos": 0, duration: 0});
+    this.setState({"time-pos": 0, duration: 0});
   }
   handleSeekMouseDown() {
     this.seeking = true;
   }
   handleSeek(e) {
+    e.target.blur();
     const timePos = +e.target.value;
     this.setState({"time-pos": timePos});
     this.mpv.property("time-pos", timePos);
@@ -56,13 +60,12 @@ class Main extends React.PureComponent {
   handleSeekMouseUp() {
     this.seeking = false;
   }
-  handleLoad() {
-    const items = remote.dialog.showOpenDialog({
-      filters: [
-        {name: "Videos", extensions: ["mkv", "mp4", "mov", "avi"]},
-        {name: "All files", extensions: ["*"]},
-      ],
-    });
+  handleLoad(e) {
+    e.target.blur();
+    const items = remote.dialog.showOpenDialog({filters: [
+      {name: "Videos", extensions: ["mkv", "mp4", "mov", "avi"]},
+      {name: "All files", extensions: ["*"]},
+    ]});
     if (items) {
       this.mpv.command("loadfile", items[0]);
     }
