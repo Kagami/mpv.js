@@ -26,6 +26,7 @@ class Main extends React.PureComponent {
     document.removeEventListener("keydown", this.handleKeyDown, false);
   }
   handleKeyDown(e) {
+    if (!this.state.duration) return;
     this.mpv.keypress(e);
   }
   handleMPVReady(mpv) {
@@ -37,9 +38,12 @@ class Main extends React.PureComponent {
     this.setState({[name]: value});
   }
   togglePause() {
+    if (!this.state.duration) return;
     this.mpv.property("pause", !this.state.pause);
   }
   handleStop() {
+    this.mpv.command("stop");
+    this.setState({pause: true, "time-pos": 0, duration: 0});
   }
   handleSeekMouseDown() {
     this.seeking = true;
