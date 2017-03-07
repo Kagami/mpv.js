@@ -4,6 +4,7 @@ module.exports = class extends React.Component {
   // PUBLIC API.
 
   command(cmd, ...args) {
+    args = args.map(arg => arg.toString());
     this.postData("run_command", [cmd].concat(args));
   }
 
