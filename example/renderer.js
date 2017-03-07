@@ -1,3 +1,5 @@
+"use strict";
+
 const path = require("path");
 const React = require("react");
 const ReactDOM = require("react-dom");
@@ -40,7 +42,7 @@ class Main extends React.PureComponent {
     ["pause", "time-pos", "duration", "eof-reached"].forEach(observe);
     this.mpv.command("loadfile", path.join(__dirname, "tos.mkv"));
   }
-  handlePropertyChange({name, value}) {
+  handlePropertyChange(name, value) {
     if (name === "time-pos" && this.seeking) {
       return;
     } else if (name === "eof-reached" && value) {

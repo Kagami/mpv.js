@@ -1,3 +1,5 @@
+"use strict";
+
 const {BrowserWindow, app} = require("electron");
 require("electron-debug")();
 
