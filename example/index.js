@@ -13,6 +13,7 @@ app.on("ready", () => {
   const win = new BrowserWindow({
     width: 1280,
     height: 574,
+    autoHideMenuBar: true,
     useContentSize: process.platform !== "linux",
     title: "mpv.js example player",
     webPreferences: {plugins: true},
