@@ -113,9 +113,6 @@ class MPV extends React.Component {
   componentDidMount() {
     this.node().addEventListener("message", this.handleMessage, false);
   }
-  componentWillUnmount() {
-    this.node().removeEventListener("message", this.handleMessage, false);
-  }
   handleMessage(e) {
     const msg = e.data;
     const {type, data} = msg;
