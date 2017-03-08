@@ -8,6 +8,7 @@ addons:
     sources:
       - sourceline: "ppa:mc3man/testing6"
     packages:
+      - libc6:i386
       - libmpv1
 before_install:
   - ( cd ~ && wget https://storage.googleapis.com/nativeclient-mirror/nacl/nacl_sdk/nacl_sdk.zip )
