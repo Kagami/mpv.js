@@ -6,7 +6,7 @@ All format embeddable player for Electron/NW.js applications powered by [mpv](ht
 
 ## Example
 
-![](https://raw.githubusercontent.com/Kagami/mpv.js/master/example/shot.png)
+![](https://i.imgur.com/tLFkATs.png)
 
 [Simple Electron application](example) yet capable of handling pretty much any available video thanks to mpv. Run:
 
