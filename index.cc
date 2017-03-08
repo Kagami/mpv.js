@@ -165,9 +165,8 @@ class MPVInstance : public pp::Instance {
       std::vector<std::string> args_str(len);
       std::vector<const char*> args_ptr(len + 1);
       for (uint32_t i = 0; i < len; i++) {
-        std::string arg = args.Get(i).AsString();
-        args_str[i] = arg;
-        args_ptr[i] = arg.c_str();
+        args_str[i] = args.Get(i).AsString();
+        args_ptr[i] = args_str[i].c_str();
       }
       args_ptr[len] = NULL;
       mpv_command(mpv_, args_ptr.data());
