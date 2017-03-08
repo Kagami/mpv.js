@@ -45,7 +45,7 @@
     "CI": "<!(echo $CI)",
   },
   "conditions": [
-    ["OS=='linux' and CI!=1", {
+    ["OS=='linux' and CI!='true'", {
       "targets": [
         {
           "target_name": "ffmpeg57",
