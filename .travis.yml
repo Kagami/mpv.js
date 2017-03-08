@@ -10,8 +10,7 @@ before_install:
   - sudo apt-get install -y libc6:i386 libmpv-dev
   - ( cd ~ && wget https://storage.googleapis.com/nativeclient-mirror/nacl/nacl_sdk/nacl_sdk.zip )
   - ( cd ~ && unzip nacl_sdk.zip && cd nacl_sdk && ./naclsdk update )
-env:
-  - NACL_SDK_ROOT=$HOME/nacl_sdk/pepper_49
+  - export NACL_SDK_ROOT=$HOME/nacl_sdk/pepper_49
 notifications:
   email:
     on_success: never
