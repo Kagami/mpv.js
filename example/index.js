@@ -1,11 +1,13 @@
 "use strict";
 
+const path = require("path");
 const {BrowserWindow, app} = require("electron");
 require("electron-debug")();
 
+const pluginPath = path.join(__dirname, "..", "build", "Release", "mpvjs.node");
+const plugins = `${pluginPath};application/x-mpvjs`;
 app.commandLine.appendSwitch("ignore-gpu-blacklist");
-app.commandLine.appendSwitch("register-pepper-plugins",
-                             "build/Release/mpvjs.node;application/x-mpvjs");
+app.commandLine.appendSwitch("register-pepper-plugins", plugins);
 
 app.on("ready", () => {
   const win = new BrowserWindow({
