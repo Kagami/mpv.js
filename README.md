@@ -1,6 +1,6 @@
 # mpv.js [![](https://img.shields.io/travis/Kagami/mpv.js.svg)](http://travis-ci.org/Kagami/mpv.js) [![](https://img.shields.io/npm/v/mpv.js.svg)](https://npmjs.org/package/mpv.js)
 
-Pepper plugin for Electron/NW.js applications providing video playback for a great variety of formats using [mpv](https://mpv.io/) player.
+All format embeddable player for Electron/NW.js applications powered by [mpv](https://mpv.io/).
 
 ## Usage
 
