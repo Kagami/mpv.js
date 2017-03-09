@@ -1,3 +1,5 @@
 /node_modules/
 /npm-debug.log
 /build/
+/iojs-1.0.0/
+/prebuilds/
