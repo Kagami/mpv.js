@@ -10,7 +10,7 @@ const React = require("react");
 /**
  * React wrapper.
  */
-class MPV extends React.Component {
+class ReactMPV extends React.Component {
   /**
    * Send a command to the player.
    *
@@ -137,7 +137,7 @@ class MPV extends React.Component {
 /**
  * Accepted properties.
  */
-MPV.propTypes = {
+ReactMPV.propTypes = {
   /**
    * The CSS class name of the plugin element.
    */
@@ -163,6 +163,4 @@ MPV.propTypes = {
   onPropertyChange: React.PropTypes.func,
 };
 
-module.exports = {
-  react: {MPV},
-};
+module.exports = {ReactMPV};

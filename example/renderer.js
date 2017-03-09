@@ -4,7 +4,7 @@ const path = require("path");
 const React = require("react");
 const ReactDOM = require("react-dom");
 const {remote} = require("electron");
-const {MPV} = require("../index").react;
+const MPV = require("../index").ReactMPV;
 
 class Main extends React.PureComponent {
   constructor(props) {
