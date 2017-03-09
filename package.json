@@ -5,8 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "eslint .",
-    "example": "electron example",
-    "fix-linux-ld": "cp build/Release/ffmpeg57.node node_modules/electron/dist/libffmpeg.so"
+    "example": "electron example"
   },
   "repository": {
     "type": "git",
