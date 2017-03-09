@@ -106,14 +106,7 @@ class MPV extends React.Component {
     const msg = {type, data};
     this.node().postMessage(msg);
   }
-  constructor(props) {
-    super(props);
-    this.handleMessage = this.handleMessage.bind(this);
-  }
-  componentDidMount() {
-    this.node().addEventListener("message", this.handleMessage, false);
-  }
-  handleMessage(e) {
+  _handleMessage(e) {
     const msg = e.data;
     const {type, data} = msg;
     if (type === "property_change" && this.props.onPropertyChange) {
@@ -122,6 +115,13 @@ class MPV extends React.Component {
     } else if (type === "ready" && this.props.onReady) {
       this.props.onReady(this);
     }
+  }
+  componentDidMount() {
+    this.node().addEventListener("message", this._handleMessage.bind(this));
+  }
+  shouldComponentUpdate(nextProps) {
+    return nextProps.className !== this.props.className ||
+           nextProps.style !== this.props.style;
   }
   render() {
     const defaultStyle = {display: "block", width: "100%", height: "100%"};
