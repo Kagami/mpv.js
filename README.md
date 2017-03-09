@@ -27,13 +27,13 @@ See [installation](https://github.com/nodejs/node-gyp#installation) section.
 See [download](https://developer.chrome.com/native-client/sdk/download) page.
 
 * Windows: unpack `nacl_sdk.zip` to `C:\`
-* macOS & Linux: add `export NACL_SDK_ROOT=/path/to/pepper_version` to `~/.bash_profile`
+* macOS & Linux: add `export NACL_SDK_ROOT=/path/to/pepper_49` to `~/.bash_profile`
 
 ### Step 2.1: compile 64-bit NaCl host binaries on Windows
 
-1. Open `C:\nacl_sdk\pepper49\tools\host_vc.mk` and replace `32_host` with `64_host`
+1. Open `C:\nacl_sdk\pepper_49\tools\host_vc.mk` and replace `32_host` with `64_host`
 2. Open cmd, run `"C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\vcvarsall.bat" amd64`
-3. Run `cd C:\nacl_sdk\pepper49\src` and `make TOOLCHAIN=win`
+3. Run `cd C:\nacl_sdk\pepper_49\src` and `make TOOLCHAIN=win`
 
 ### Step 3: setup mpv development files
 
