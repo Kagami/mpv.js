@@ -6,11 +6,7 @@
   <br>mpv.js<br><br>
 </h1>
 
-<h4 align="center">
-  All format embeddable player for Electron/NW.js applications.
-  <br>
-  Powered by <a href="https://mpv.io/">mpv</a>.
-</h4>
+<h4 align="center">All format embeddable player for Electron/NW.js applications.</h4>
 
 <p align="center">
   <a href="http://travis-ci.org/Kagami/mpv.js">
