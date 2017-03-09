@@ -1,6 +1,17 @@
-# mpv.js [![](https://img.shields.io/travis/Kagami/mpv.js.svg)](http://travis-ci.org/Kagami/mpv.js) [![](https://img.shields.io/npm/v/mpv.js.svg)](https://npmjs.org/package/mpv.js)
+<h1 align="center">
+  <br>mpv.js<br><br>
+</h1>
 
-All format embeddable player for Electron/NW.js applications powered by [mpv](https://mpv.io/).
+<h4 align="center">All format embeddable player for Electron/NW.js applications.</h4>
+
+<p align="center">
+  <a href="http://travis-ci.org/Kagami/mpv.js">
+    <img src="https://img.shields.io/travis/Kagami/mpv.js.svg" alt="Travis">
+  </a>
+  <a href="https://npmjs.org/package/mpv.js">
+    <img src="https://img.shields.io/npm/v/mpv.js.svg" alt="NPM">
+  </a>
+</p>
 
 ## Get libmpv
 
