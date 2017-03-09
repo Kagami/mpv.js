@@ -1,8 +1,16 @@
 <h1 align="center">
+  <br>
+  <a href="https://mpv.io/">
+    <img src="https://github.com/mpv-player/mpv.io/raw/master/source/images/mpv-logo-128.png" alt="mpv">
+  </a>
   <br>mpv.js<br><br>
 </h1>
 
-<h4 align="center">All format embeddable player for Electron/NW.js applications.</h4>
+<h4 align="center">
+  All format embeddable player for Electron/NW.js applications.
+  <br>
+  Powered by <a href="https://mpv.io/">mpv</a>.
+</h4>
 
 <p align="center">
   <a href="http://travis-ci.org/Kagami/mpv.js">
