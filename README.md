@@ -2,7 +2,17 @@
 
 All format embeddable player for Electron/NW.js applications powered by [mpv](https://mpv.io/).
 
+## Get libmpv
+
+In order to use mpv.js you need to install mpv library first.
+
+* Windows: download [mpv-dev](https://mpv.srsfckn.biz/mpv-dev-latest.7z), unpack, put corresponding `mpv-1.dll` to `C:\Windows\system32`
+* macOS: `brew install mpv`
+* Linux: `apt-get install libmpv1`
+
 ## Usage
+
+## Build
 
 ## Example
 
