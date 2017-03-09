@@ -95,13 +95,12 @@ class Main extends React.PureComponent {
   render() {
     return (
       <div className="container">
-        <div className="player">
-          <MPV
-            onReady={this.handleMPVReady}
-            onPropertyChange={this.handlePropertyChange}
-          />
-          <div className="overlay" onClick={this.togglePause} />
-        </div>
+        <MPV
+          className="player"
+          onReady={this.handleMPVReady}
+          onPropertyChange={this.handlePropertyChange}
+          onMouseDown={this.togglePause}
+        />
         <div className="controls">
           <button className="control" onClick={this.togglePause}>
             {this.state.pause ? "▶" : "▮▮"}

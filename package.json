@@ -28,7 +28,7 @@
   },
   "homepage": "https://github.com/Kagami/mpv.js#readme",
   "peerDependencies": {
-    "react": ">=0.13.0 <16.0.0"
+    "react": "^15.3.0"
   },
   "devDependencies": {
     "babel-standalone": "^6.23.1",

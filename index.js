@@ -10,7 +10,7 @@ const React = require("react");
 /**
  * React wrapper.
  */
-class ReactMPV extends React.Component {
+class ReactMPV extends React.PureComponent {
   /**
    * Send a command to the player.
    *
@@ -119,23 +119,22 @@ class ReactMPV extends React.Component {
   componentDidMount() {
     this.node().addEventListener("message", this._handleMessage.bind(this));
   }
-  shouldComponentUpdate(nextProps) {
-    return nextProps.className !== this.props.className ||
-           nextProps.style !== this.props.style;
-  }
   render() {
     const defaultStyle = {display: "block", width: "100%", height: "100%"};
-    return React.createElement("embed", {
+    const props = Object.assign({}, this.props, {
       ref: "plugin",
       type: "application/x-mpvjs",
-      className: this.props.className,
       style: Object.assign(defaultStyle, this.props.style),
     });
+    delete props.onReady;
+    delete props.onPropertyChange;
+    return React.createElement("embed", props);
   }
 }
 
 /**
- * Accepted properties.
+ * Accepted properties. Other properties (not documented) are applied to
+ * the plugin element.
  */
 ReactMPV.propTypes = {
   /**
