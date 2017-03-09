@@ -14,7 +14,7 @@ In order to use mpv.js you need to install mpv library first.
 
 ## Build
 
-In order to build `mpvjs.node` by yourself you need to setup build environment first.
+In order to build `mpvjs.node` by yourself you need to setup build environment.
 
 ### Step 1: setup node-gyp
 
