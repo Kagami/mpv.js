@@ -1,7 +1,7 @@
 <h1 align="center">
   <br>
   <a href="https://mpv.io/">
-    <img src="https://github.com/mpv-player/mpv.io/raw/master/source/images/mpv-logo-128.png" alt="mpv">
+    <img src="https://i.imgur.com/qQFg0aI.png" alt="mpv" width="200">
   </a>
   <br>mpv.js<br><br>
 </h1>
