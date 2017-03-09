@@ -43,7 +43,7 @@ See [download](https://developer.chrome.com/native-client/sdk/download) page.
 
 ### Step 4: build plugin
 
-Run `node-gyp rebuild` in project directory. Run `node-gyp rebuild --arch=ia32` to build 32-bit version of plugin on 64-bit Windows.
+Run `node-gyp rebuild` in project directory. Add flag `--arch=ia32` to build 32-bit version of plugin on 64-bit Windows.
 
 ## Example
 
