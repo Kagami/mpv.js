@@ -1,5 +1,4 @@
 <h1 align="center">
-  <br>
   <a href="https://mpv.io/">
     <img src="https://i.imgur.com/qQFg0aI.png" alt="mpv" width="200">
   </a>
@@ -8,8 +7,7 @@
 
 <h4 align="center">
   All format embeddable player for Electron/NW.js applications.
-  <br>
-  Powered by <a href="https://mpv.io/">mpv</a>.
+  <br>Powered by <a href="https://mpv.io/">mpv</a>.
 </h4>
 
 <p align="center">
