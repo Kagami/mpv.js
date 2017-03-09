@@ -5,7 +5,39 @@
 
 "use strict";
 
+const path = require("path");
 const React = require("react");
+
+const MPVJS_MIME_TYPE = "application/x-mpvjs";
+
+function containsNonASCII(str) {
+  for (let i = 0; i < str.length; i++) {
+    if (str.charCodeAt(i) > 255) {
+      return true;
+    }
+  }
+  return false;
+}
+
+/**
+ * Return value to be passed to `register-pepper-plugins` switch.
+ *
+ * @param {string} pluginDir - Plugin directory
+ * @param {string} [pluginName=mpvjs.node] - Plugin name
+ */
+function getPluginString(pluginDir, pluginName = "mpvjs.node") {
+  const fullPluginPath = path.join(pluginDir, pluginName);
+  // Try relative path to workaround ASCII-only path restriction.
+  let pluginPath = path.relative(process.cwd(), fullPluginPath);
+  // "./plugin" is required only on Linux.
+  if (process.platform === "linux" && path.dirname(pluginPath) === ".") {
+    pluginPath = `.${path.sep}${pluginPath}`;
+  }
+  if (containsNonASCII(pluginPath)) {
+    throw new Error("Non-ASCII plugin path is not supported");
+  }
+  return `${pluginPath};${MPVJS_MIME_TYPE}`;
+}
 
 /**
  * React wrapper.
@@ -123,7 +155,7 @@ class ReactMPV extends React.PureComponent {
     const defaultStyle = {display: "block", width: "100%", height: "100%"};
     const props = Object.assign({}, this.props, {
       ref: "plugin",
-      type: "application/x-mpvjs",
+      type: MPVJS_MIME_TYPE,
       style: Object.assign(defaultStyle, this.props.style),
     });
     delete props.onReady;
@@ -162,4 +194,4 @@ ReactMPV.propTypes = {
   onPropertyChange: React.PropTypes.func,
 };
 
-module.exports = {ReactMPV};
+module.exports = {getPluginString, ReactMPV};
