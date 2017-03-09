@@ -14,6 +14,37 @@ In order to use mpv.js you need to install mpv library first.
 
 ## Build
 
+In order to build `mpvjs.node` by yourself you need to setup build environment first.
+
+### Step 1: setup node-gyp
+
+See [installation](https://github.com/nodejs/node-gyp#installation) section.
+
+* Windows: Visual Studio 2013 is required
+
+### Step 2: setup NaCl SDK
+
+See [download](https://developer.chrome.com/native-client/sdk/download) page.
+
+* Windows: unpack `nacl_sdk.zip` to `C:\`
+* macOS & Linux: add `export NACL_SDK_ROOT=/path/to/pepper_version` to `~/.bash_profile`
+
+### Step 2.1: compile 64-bit NaCl host binaries on Windows
+
+1. Open `C:\nacl_sdk\pepper49\tools\host_vc.mk` and replace `32_host` with `64_host`
+2. Open cmd, run `"C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\vcvarsall.bat" amd64`
+3. Run `cd C:\nacl_sdk\pepper49\src` and `make TOOLCHAIN=win`
+
+### Step 3: setup mpv development files
+
+* Windows: download [mpv-dev](https://mpv.srsfckn.biz/mpv-dev-latest.7z), unpack to `C:\mpv-dev`, rename `include` to `mpv`
+* macOS: `brew install mpv`
+* Linux: `apt-get install libmpv-dev`
+
+### Step 4: build plugin
+
+Run `node-gyp rebuild` in project directory. Run `node-gyp rebuild --arch=ia32` to build 32-bit version of plugin on 64-bit Windows.
+
 ## Example
 
 ![](https://i.imgur.com/tLFkATs.png)
