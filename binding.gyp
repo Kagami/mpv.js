@@ -7,21 +7,18 @@
       "libraries": ["-lppapi", "-lppapi_cpp", "-lppapi_gles2"],
       "conditions": [
         ["OS=='win'", {
-          "include_dirs": [
-            "C:/nacl_sdk/pepper_49/include",
-            "C:/mingw/local64/include",
-          ],
+          "include_dirs": ["C:/nacl_sdk/pepper_49/include", "C:/mpv-dev"],
           "libraries": ["-llibmpv.dll.a"],
           "conditions": [
             ["target_arch=='ia32'", {
               "library_dirs": [
                 "C:/nacl_sdk/pepper_49/lib/win_x86_32_host/Release",
-                "C:/mingw/local32/lib",
+                "C:/mpv-dev/32",
               ],
             }, "target_arch=='x64'", {
               "library_dirs": [
                 "C:/nacl_sdk/pepper_49/lib/win_x86_64_host/Release",
-                "C:/mingw/local64/lib",
+                "C:/mpv-dev/64",
               ],
             }],
           ],
