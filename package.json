@@ -4,11 +4,11 @@
   "description": "mpv pepper plugin",
   "main": "index.js",
   "scripts": {
-    "install": "prebuild-install -t 1.0.0 || node-gyp rebuild",
+    "install": "prebuild-install -t 7.0.0 || node-gyp rebuild",
     "test": "eslint .",
     "example": "electron example",
-    "prebuild-win": "rd /s /q prebuilds & prebuild -t 1.0.0 -a ia32 && prebuild -t 1.0.0 -a x64",
-    "prebuild-posix": "rm -rf prebuilds && prebuild -t 1.0.0 -a x64 --strip",
+    "prebuild-win": "rd /s /q prebuilds & prebuild -t 7.0.0 -a ia32 && prebuild -t 7.0.0 -a x64",
+    "prebuild-posix": "rm -rf prebuilds && prebuild -t 7.0.0 -a x64 --strip",
     "collect-prebuilds": "npm run prebuild-posix && cd prebuilds && cp ${MPVJS_WIN_PREBUILDS}/* . && cp ${MPVJS_MAC_PREBUILDS}/* ."
   },
   "repository": {
