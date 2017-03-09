@@ -31,6 +31,18 @@ In order to use mpv.js you need to install mpv library first.
 
 ## Usage
 
+## Example
+
+![](https://i.imgur.com/tLFkATs.png)
+
+[Simple Electron application](example) yet capable of handling pretty much any available video thanks to mpv. Run:
+
+```bash
+git clone https://github.com/Kagami/mpv.js.git && cd mpv.js
+npm install
+npm run example
+```
+
 ## Build
 
 In order to build `mpvjs.node` by yourself you need to setup build environment.
@@ -64,18 +76,6 @@ See [download](https://developer.chrome.com/native-client/sdk/download) page.
 
 * Run `node-gyp rebuild` in project directory
 * Run `node-gyp rebuild --arch=ia32` to build 32-bit version of plugin on 64-bit Windows
-
-## Example
-
-![](https://i.imgur.com/tLFkATs.png)
-
-[Simple Electron application](example) yet capable of handling pretty much any available video thanks to mpv. Run:
-
-```bash
-git clone https://github.com/Kagami/mpv.js.git && cd mpv.js
-npm install
-npm run example
-```
 
 ## Applications using mpv.js
 
