@@ -2,13 +2,13 @@
 
 const path = require("path");
 const {BrowserWindow, app} = require("electron");
-const {getPluginString} = require("../index");
+const {getPluginEntry} = require("../index");
 require("electron-debug")();
 
 const pdir = path.join(__dirname, "..", "build", "Release");
 if (process.platform !== "linux") {process.chdir(pdir);}
 app.commandLine.appendSwitch("ignore-gpu-blacklist");
-app.commandLine.appendSwitch("register-pepper-plugins", getPluginString(pdir));
+app.commandLine.appendSwitch("register-pepper-plugins", getPluginEntry(pdir));
 
 app.on("ready", () => {
   const win = new BrowserWindow({

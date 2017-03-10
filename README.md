@@ -54,14 +54,14 @@ Package includes prebuilt binaries for all major platforms so no need to setup c
 
 ```javascript
 const {app} = require("electron");
-const {getPluginString} = require("mpv.js");
+const {getPluginEntry} = require("mpv.js");
 
 // Absolute path to plugin directory.
 const pluginDir = path.resolve("build", "Release");
 // See pitfalls section for comments.
 if (process.platform !== "linux") {process.chdir(pluginDir);}
 app.commandLine.appendSwitch("ignore-gpu-blacklist");
-app.commandLine.appendSwitch("register-pepper-plugins", getPluginString(pluginDir));
+app.commandLine.appendSwitch("register-pepper-plugins", getPluginEntry(pluginDir));
 ```
 
 ### Use MPV component

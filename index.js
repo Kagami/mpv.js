@@ -25,7 +25,7 @@ function containsNonASCII(str) {
  * @param {string} pluginDir - Plugin directory
  * @param {string} [pluginName=mpvjs.node] - Plugin name
  */
-function getPluginString(pluginDir, pluginName = "mpvjs.node") {
+function getPluginEntry(pluginDir, pluginName = "mpvjs.node") {
   const fullPluginPath = path.join(pluginDir, pluginName);
   // Try relative path to workaround ASCII-only path restriction.
   let pluginPath = path.relative(process.cwd(), fullPluginPath);
@@ -194,4 +194,4 @@ ReactMPV.propTypes = {
   onPropertyChange: React.PropTypes.func,
 };
 
-module.exports = {getPluginString, ReactMPV};
+module.exports = {getPluginEntry, ReactMPV};
