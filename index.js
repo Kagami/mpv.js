@@ -29,9 +29,16 @@ function getPluginEntry(pluginDir, pluginName = "mpvjs.node") {
   const fullPluginPath = path.join(pluginDir, pluginName);
   // Try relative path to workaround ASCII-only path restriction.
   let pluginPath = path.relative(process.cwd(), fullPluginPath);
-  // "./plugin" is required only on Linux.
-  if (process.platform === "linux" && path.dirname(pluginPath) === ".") {
-    pluginPath = `.${path.sep}${pluginPath}`;
+  if (path.dirname(pluginPath) === ".") {
+    // "./plugin" is required only on Linux.
+    if (process.platform === "linux") {
+      pluginPath = `.${path.sep}${pluginPath}`;
+    }
+  } else {
+    // Relative plugin paths doesn't work on Windows.
+    if (process.platform === "win32") {
+      pluginPath = fullPluginPath;
+    }
   }
   if (containsNonASCII(pluginPath)) {
     throw new Error("Non-ASCII plugin path is not supported");
