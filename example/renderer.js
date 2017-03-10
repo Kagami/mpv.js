@@ -4,7 +4,7 @@ const path = require("path");
 const React = require("react");
 const ReactDOM = require("react-dom");
 const {remote} = require("electron");
-const MPV = require("../index").ReactMPV;
+const {ReactMPV} = require("../index");
 
 class Main extends React.PureComponent {
   constructor(props) {
@@ -95,7 +95,7 @@ class Main extends React.PureComponent {
   render() {
     return (
       <div className="container">
-        <MPV
+        <ReactMPV
           className="player"
           onReady={this.handleMPVReady}
           onPropertyChange={this.handlePropertyChange}

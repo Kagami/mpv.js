@@ -42,13 +42,81 @@ npm run example
 
 ## Usage
 
+### Add npm package
+
+```bash
+npm install mpv.js --save
+```
+
+Package includes prebuilt binaries for all major platforms so no need to setup compilers.
+
+### Load plugin in main process
+
+```javascript
+const {app} = require("electron");
+const {getPluginString} = require("mpv.js");
+
+// Absolute path to plugin directory.
+const pluginDir = path.resolve("build", "Release");
+// See pitfalls section for comments.
+if (process.platform !== "linux") {process.chdir(pluginDir);}
+app.commandLine.appendSwitch("ignore-gpu-blacklist");
+app.commandLine.appendSwitch("register-pepper-plugins", getPluginString(pluginDir));
+```
+
+### Use MPV component
+
+```javascript
+const React = require("react");
+const {ReactMPV} = require("mpv.js");
+
+class Player extends React.PureComponent {
+  constructor(props) {
+    super(props);
+    this.mpv = null;
+    this.state = {pause: true, "time-pos": 0};
+  }
+  handleMPVReady(mpv) {
+    this.mpv = mpv;
+    this.mpv.observe("pause");
+    this.mpv.observe("time-pos");
+    this.mpv.command("loadfile", "/path/to/video.mkv");
+  }
+  handlePropertyChange(name, value) {
+    this.setState({[name]: value});
+  }
+  togglePause() {
+    this.mpv.property("pause", !this.state.pause);
+  }
+  render() {
+    return (
+      <ReactMPV
+        className="player"
+        onReady={this.handleMPVReady.bind(this)}
+        onPropertyChange={this.handlePropertyChange.bind(this)}
+        onMouseDown={this.togglePause.bind(this)}
+      />
+    );
+  }
+}
+```
+
+Currently only React component is provided.
+
+### See also
+
+* [Command list](https://mpv.io/manual/master/#list-of-input-commands) documentation
+* [Property list](https://mpv.io/manual/master/#property-list) documentation
+* [ReactMPV source](index.js) with JSDoc API comments
+* [Example player source](example/renderer.js) for a slightly more advanced usage
+
 ## Shipping
 
-## Common pitfails
+## Pitfalls
 
 ## Build
 
-To build `mpvjs.node` by yourself you need to setup build environment.
+To build `mpvjs.node` by yourself you need to setup dev environment.
 
 ### Step 1: setup node-gyp
 
@@ -83,6 +151,8 @@ See [download](https://developer.chrome.com/native-client/sdk/download) page.
 ## Applications using mpv.js
 
 * [boram](https://github.com/Kagami/boram)
+
+Feel free to PR your own.
 
 ## License
 
