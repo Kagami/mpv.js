@@ -136,7 +136,7 @@ This is unfortunate Chromium's [pepper_plugin_list.cc](https://chromium.googleso
 
 On Windows and Mac it can be done by changing working directory to the path where `mpvjs.node` is stored. Unfortunately you can't change CWD of renderer process on Linux because of zygote architecture so another fix is just `cd` to the plugin directory in your application's run script.
 
-`getPluginEntry` helper will return you plugin entry string with that fix applied.
+`getPluginEntry` helper will give you plugin entry string with that fix applied.
 
 ### libmpv is being linked with Electron's libffmpeg on Linux
 
@@ -148,7 +148,7 @@ To workaround this you need to either replace `libffmpeg.so` with empty wrapper 
 gcc -shared -lavformat -o node_modules/electron/dist/libffmpeg.so
 ```
 
-**NOTE:** This doesn't work for Electron >= 1.4.15 due to [#268](https://github.com/electron/libchromiumcontent/issues/268).)
+**NOTE:** This doesn't work for Electron >= 1.4.15 due to [#268](https://github.com/electron/libchromiumcontent/issues/268).
 
 Or use libmpv with statically linked `libav*`.
 
