@@ -36,7 +36,7 @@ In order to use mpv.js you need to install mpv library first.
 ```bash
 git clone https://github.com/Kagami/mpv.js.git && cd mpv.js
 npm install
-# Run "npm run fix-linux-ld" if on Linux
+# On Linux: npm run use-system-ffmpeg
 npm run example
 ```
 
