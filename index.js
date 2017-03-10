@@ -41,7 +41,11 @@ function getPluginEntry(pluginDir, pluginName = "mpvjs.node") {
     }
   }
   if (containsNonASCII(pluginPath)) {
-    throw new Error("Non-ASCII plugin path is not supported");
+    if (containsNonASCII(fullPluginPath)) {
+      throw new Error("Non-ASCII plugin path is not supported");
+    } else {
+      pluginPath = fullPluginPath;
+    }
   }
   return `${pluginPath};${MPVJS_MIME_TYPE}`;
 }
