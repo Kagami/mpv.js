@@ -50,7 +50,7 @@ npm install mpv.js --save
 
 Package includes prebuilt binaries for all major platforms so no need to setup compilers.
 
-### Load plugin in main process
+### Load plugin in main process (Electron example)
 
 ```javascript
 const path = require("path");
@@ -65,7 +65,7 @@ app.commandLine.appendSwitch("ignore-gpu-blacklist");
 app.commandLine.appendSwitch("register-pepper-plugins", getPluginEntry(pluginDir));
 ```
 
-### Use MPV component
+### Use MPV component (React example)
 
 ```javascript
 const React = require("react");
@@ -112,6 +112,21 @@ Currently only React component is provided.
 * [example player source](example/renderer.js) for a more advanced usage
 
 ## Shipping
+
+Basically all you need to ship is `mpvjs.node` and mpv library. Make sure they both and also Electron/NW.js distribution have the same bitness!
+
+### Windows
+
+You may use [lachs0r builds](https://mpv.srsfckn.biz/mpv-dev-20170212.7z). Copy `mpv-1.dll` to the directory with `mpvjs.node` and you are done.
+
+### macOS
+
+[Homebrew](https://brew.sh/) can compile `libmpv.1.dylib` and all its dependencies. To find dylibs that need to be packaged and fix global paths and you may use [collect-dylib-deps](scripts/collect-dylib-deps.sh) script.
+
+### Linux
+
+* Either ask your users to install `libmpv1` with package manager (depend on it if you have e.g. PPA). See also pitfalls section.
+* Or compile static `libmpv.so` with e.g. [mpv-build](https://github.com/mpv-player/mpv-build).
 
 ## Pitfalls
 
