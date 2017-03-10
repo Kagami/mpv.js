@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "mpv pepper plugin",
   "main": "index.js",
+  "_from": "",
   "scripts": {
     "install": "prebuild-install -t 1.0.0 || node-gyp rebuild",
     "test": "eslint .",

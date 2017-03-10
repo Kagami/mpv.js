@@ -31,6 +31,7 @@
               "library_dirs": ["$(NACL_SDK_ROOT)/lib/linux_host/Release"],
               "ldflags": ["-static-libstdc++"],
             }, "OS=='mac'", {
+              "xcode_settings": {"MACOSX_DEPLOYMENT_TARGET": "10.9"},
               "library_dirs": ["$(NACL_SDK_ROOT)/lib/mac_host/Release"],
             }],
           ],
