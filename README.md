@@ -118,7 +118,7 @@ Basically all you need to ship is `mpvjs.node` and mpv library. Make sure they b
 
 ### Windows
 
-You may use [lachs0r builds](https://mpv.srsfckn.biz/mpv-dev-20170212.7z). Copy `mpv-1.dll` to the directory with `mpvjs.node` and you are done.
+You may use [lachs0r builds](https://mpv.srsfckn.biz/mpv-dev-latest.7z). Copy `mpv-1.dll` to the directory with `mpvjs.node` and you are done.
 
 ### macOS
 
