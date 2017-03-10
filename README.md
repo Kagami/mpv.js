@@ -7,11 +7,11 @@
 
 <h4 align="center">
   All format embeddable player for Electron/NW.js applications.
-  <br>Powered by <a href="https://mpv.io/">mpv</a>.
+  <br>Powered by marvelous <a href="https://mpv.io/">mpv</a>.
 </h4>
 
 <p align="center">
-  <a href="http://travis-ci.org/Kagami/mpv.js">
+  <a href="https://travis-ci.org/Kagami/mpv.js">
     <img src="https://img.shields.io/travis/Kagami/mpv.js.svg" alt="Travis">
   </a>
   <a href="https://npmjs.org/package/mpv.js">
