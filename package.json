@@ -11,7 +11,7 @@
     "use-system-ffmpeg": "gcc -shared -lavformat -o node_modules/electron/dist/libffmpeg.so",
     "prebuild-win": "rd /s /q prebuilds & prebuild -t 1.0.0 -a ia32 && prebuild -t 1.0.0 -a x64",
     "prebuild-posix": "rm -rf prebuilds && prebuild -t 1.0.0 -a x64 --strip",
-    "collect-prebuilds": "npm run prebuild-posix && cd prebuilds && cp ${MPVJS_WIN_PREBUILDS}/* . && cp ${MPVJS_MAC_PREBUILDS}/* ."
+    "collect-prebuilds": "npm run prebuild-posix && cd prebuilds && cp ${MPVJS_WIN_PREBUILDS}/* . && cp ${MPVJS_MAC_PREBUILDS}/* . && perl-rename \"s/v\\d+\\.\\d+\\.\\d+/v${npm_package_version}/\" *"
   },
   "repository": {
     "type": "git",
