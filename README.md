@@ -106,10 +106,10 @@ Currently only React component is provided.
 
 ### See also
 
-* [Property list](https://mpv.io/manual/master/#property-list) documentation
-* [Command list](https://mpv.io/manual/master/#list-of-input-commands) documentation
+* [mpv properties](https://mpv.io/manual/master/#property-list) documentation
+* [mpv commands](https://mpv.io/manual/master/#list-of-input-commands) documentation
 * [ReactMPV source](index.js) with JSDoc API comments
-* [Example player source](example/renderer.js) for a slightly more advanced usage
+* [example player source](example/renderer.js) for a more advanced usage
 
 ## Shipping
 
