@@ -122,12 +122,13 @@ You may use [lachs0r builds](https://mpv.srsfckn.biz/mpv-dev-20170212.7z). Copy 
 
 ### macOS
 
-[Homebrew](https://brew.sh/) can compile `libmpv.1.dylib` and all its dependencies. To find dylibs that need to be packaged and fix global paths and you may use [collect-dylib-deps](scripts/collect-dylib-deps.sh) script.
+[Homebrew](https://brew.sh/) can compile `libmpv.1.dylib` and all its dependencies. To find dylibs that need to be packaged and fix global paths you may use [collect-dylib-deps](scripts/collect-dylib-deps.sh) script.
 
 ### Linux
 
-* Either ask your users to install `libmpv1` with package manager (depend on it if you have e.g. PPA); see also pitfalls section
-* Or compile static `libmpv.so` with e.g. [mpv-build](https://github.com/mpv-player/mpv-build)
+Two options are normally acceptable:
+1. Ask your users to install `libmpv1` with package manager or simply depend on it if you build package.
+2. Compile static `libmpv.so` with e.g. [mpv-build](https://github.com/mpv-player/mpv-build).
 
 ## Pitfalls
 
@@ -135,15 +136,15 @@ You may use [lachs0r builds](https://mpv.srsfckn.biz/mpv-dev-20170212.7z). Copy 
 
 This is unfortunate Chromium's [pepper_plugin_list.cc](https://chromium.googlesource.com/chromium/src/+/59.0.3036.3/content/common/pepper_plugin_list.cc#84) restriction. To workaround this relative path might be used.
 
-On Windows and Mac it can be done by changing working directory to the path where `mpvjs.node` is stored. Unfortunately you can't change CWD of renderer process on Linux inside main process because of zygote architecture so another fix is just `cd` to the plugin directory in your application's run wrapper script.
+On Windows and Mac it can be done by changing working directory to the path where `mpvjs.node` is stored. You can't change CWD of renderer process on Linux inside main process because of zygote architecture so another fix is just `cd` to the plugin directory in wrapper script.
 
 `getPluginEntry` helper will give you plugin entry string with that fix applied.
 
 ### libmpv is being linked with Electron's libffmpeg on Linux
 
-On Linux plugins loaded with `register-pepper-plugins` switch inherit symbols from `electron` binary so it can lead to unfortunate effect: libmpv will use Electron's libraries which is not supported.
+On Linux plugins loaded with `register-pepper-plugins` inherit symbols from `electron` binary so it leads to unfortunate effect: libmpv will use Electron's libraries which is not supported.
 
-To workaround this you need to either replace `libffmpeg.so` with empty wrapper linked to `libav*`:
+To workaround it you need to either replace `libffmpeg.so` with empty wrapper linked to `libav*`:
 
 ```bash
 gcc -shared -lavformat -o node_modules/electron/dist/libffmpeg.so
