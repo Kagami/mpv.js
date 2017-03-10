@@ -61,6 +61,7 @@ const {getPluginEntry} = require("mpv.js");
 const pluginDir = path.join(path.dirname(require.resolve("mpv.js")), "build", "Release");
 // See pitfalls section for details.
 if (process.platform !== "linux") {process.chdir(pluginDir);}
+// To support a broader number of systems.
 app.commandLine.appendSwitch("ignore-gpu-blacklist");
 app.commandLine.appendSwitch("register-pepper-plugins", getPluginEntry(pluginDir));
 ```
@@ -111,7 +112,7 @@ Currently only React component is provided.
 * [ReactMPV source](index.js) with JSDoc API comments
 * [example player source](example/renderer.js) for a more advanced usage
 
-## Shipping
+## Packaging
 
 Basically all you need to ship is `mpvjs.node` and mpv library. Make sure they both and also Electron/NW.js distribution have the same bitness!
 
