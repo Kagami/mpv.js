@@ -53,6 +53,7 @@ Package includes prebuilt binaries for all major platforms so no need to setup c
 ### Load plugin in main process
 
 ```javascript
+const path = require("path");
 const {app} = require("electron");
 const {getPluginEntry} = require("mpv.js");
 
