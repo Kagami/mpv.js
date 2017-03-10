@@ -59,7 +59,7 @@ const {getPluginEntry} = require("mpv.js");
 
 // Absolute path to plugin directory.
 const pluginDir = path.resolve("build", "Release");
-// See pitfalls section for comments.
+// See pitfalls section for details.
 if (process.platform !== "linux") {process.chdir(pluginDir);}
 app.commandLine.appendSwitch("ignore-gpu-blacklist");
 app.commandLine.appendSwitch("register-pepper-plugins", getPluginEntry(pluginDir));
@@ -106,8 +106,8 @@ Currently only React component is provided.
 
 ### See also
 
-* [mpv properties](https://mpv.io/manual/master/#property-list) documentation
-* [mpv commands](https://mpv.io/manual/master/#list-of-input-commands) documentation
+* [mpv properties documentation](https://mpv.io/manual/master/#property-list)
+* [mpv commands documentation](https://mpv.io/manual/master/#list-of-input-commands)
 * [ReactMPV source](index.js) with JSDoc API comments
 * [example player source](example/renderer.js) for a more advanced usage
 
@@ -129,6 +129,28 @@ You may use [lachs0r builds](https://mpv.srsfckn.biz/mpv-dev-20170212.7z). Copy 
 * Or compile static `libmpv.so` with e.g. [mpv-build](https://github.com/mpv-player/mpv-build)
 
 ## Pitfalls
+
+### Path to plugin can't contain non-ASCII symbols
+
+This is unfortunate Chromium's [pepper_plugin_list.cc](https://chromium.googlesource.com/chromium/src/+/59.0.3036.3/content/common/pepper_plugin_list.cc#84) restriction. To workaround this relative path might be used.
+
+On Windows and Mac it can be done by changing working directory to the path where `mpvjs.node` is stored. Unfortunately you can't change CWD of renderer process on Linux because of zygote architecture so another fix is just `cd` to the plugin directory in your application's run script.
+
+`getPluginEntry` helper will return you plugin entry string with that fix applied.
+
+### libmpv is being linked with Electron's libffmpeg on Linux
+
+On Linux plugins loaded with `register-pepper-plugins` switch inherit symbols from `electron` binary so it can lead to unfortunate effect: libmpv will use Electron's libraries which is not supported.
+
+To workaround this you need to either replace `libffmpeg.so` with empty wrapper linked to `libav*`:
+
+```bash
+gcc -shared -lavformat -o node_modules/electron/dist/libffmpeg.so
+```
+
+**NOTE:** This doesn't work for Electron >= 1.4.15 due to [#268](https://github.com/electron/libchromiumcontent/issues/268).)
+
+Or use libmpv with statically linked `libav*`.
 
 ## Build
 
