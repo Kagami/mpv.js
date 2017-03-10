@@ -134,7 +134,7 @@ You may use [lachs0r builds](https://mpv.srsfckn.biz/mpv-dev-20170212.7z). Copy 
 
 This is unfortunate Chromium's [pepper_plugin_list.cc](https://chromium.googlesource.com/chromium/src/+/59.0.3036.3/content/common/pepper_plugin_list.cc#84) restriction. To workaround this relative path might be used.
 
-On Windows and Mac it can be done by changing working directory to the path where `mpvjs.node` is stored. Unfortunately you can't change CWD of renderer process on Linux because of zygote architecture so another fix is just `cd` to the plugin directory in your application's run script.
+On Windows and Mac it can be done by changing working directory to the path where `mpvjs.node` is stored. Unfortunately you can't change CWD of renderer process on Linux inside main process because of zygote architecture so another fix is just `cd` to the plugin directory in your application's run wrapper script.
 
 `getPluginEntry` helper will give you plugin entry string with that fix applied.
 
