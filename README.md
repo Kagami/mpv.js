@@ -125,8 +125,8 @@ You may use [lachs0r builds](https://mpv.srsfckn.biz/mpv-dev-20170212.7z). Copy 
 
 ### Linux
 
-* Either ask your users to install `libmpv1` with package manager (depend on it if you have e.g. PPA). See also pitfalls section.
-* Or compile static `libmpv.so` with e.g. [mpv-build](https://github.com/mpv-player/mpv-build).
+* Either ask your users to install `libmpv1` with package manager (depend on it if you have e.g. PPA); see also pitfalls section
+* Or compile static `libmpv.so` with e.g. [mpv-build](https://github.com/mpv-player/mpv-build)
 
 ## Pitfalls
 
