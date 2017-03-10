@@ -27,8 +27,6 @@ In order to use mpv.js you need to install mpv library first.
 * macOS: `brew install mpv`
 * Linux: `apt-get install libmpv1`
 
-## Usage
-
 ## Example
 
 ![](https://i.imgur.com/tLFkATs.png)
@@ -40,6 +38,12 @@ git clone https://github.com/Kagami/mpv.js.git && cd mpv.js
 npm install
 npm run example
 ```
+
+## Usage
+
+## Shipping
+
+## Common pitfails
 
 ## Build
 
@@ -86,3 +90,5 @@ mpv.js is licensed under [CC0](COPYING) itself, however mpv.js + libmpv build is
 It shouldn't affect entire Electron/NW.js app though because Chromium runs plugins inside separate process and GPL FAQ [doesn't restrict that](https://www.gnu.org/licenses/gpl-faq.html#NFUseGPLPlugins). (This is not a legal advice.)
 
 Example video is part of Tears of Steel movie (CC) Blender Foundation | mango.blender.org.
+
+Logo is by @SteveJobzniak.
