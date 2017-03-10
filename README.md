@@ -36,7 +36,7 @@ In order to use mpv.js you need to install mpv library first.
 ```bash
 git clone https://github.com/Kagami/mpv.js.git && cd mpv.js
 npm install
-# On Linux: npm run use-system-ffmpeg
+# Only on Linux: npm run use-system-ffmpeg
 npm run example
 ```
 
@@ -148,7 +148,7 @@ On Linux plugins loaded with `register-pepper-plugins` inherit symbols from `ele
 To workaround it you need to either replace `libffmpeg.so` with empty wrapper linked to `libav*`:
 
 ```bash
-gcc -shared -lavformat -o node_modules/electron/dist/libffmpeg.so
+gcc -shared -lavformat -o /path/to/libffmpeg.so
 ```
 
 **NOTE:** This doesn't work for Electron >= 1.4.15 due to [#268](https://github.com/electron/libchromiumcontent/issues/268).
