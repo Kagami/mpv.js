@@ -11,6 +11,7 @@ before_install:
   - ( cd ~ && wget https://storage.googleapis.com/nativeclient-mirror/nacl/nacl_sdk/nacl_sdk.zip )
   - ( cd ~ && unzip nacl_sdk.zip && cd nacl_sdk && ./naclsdk update )
   - export NACL_SDK_ROOT=$HOME/nacl_sdk/pepper_49
+  - sed -i '/"_from":/d' package.json
 notifications:
   email:
     on_success: never
