@@ -8,7 +8,10 @@
 const path = require("path");
 const React = require("react");
 
-const MPVJS_MIME_TYPE = "application/x-mpvjs";
+/**
+ * The MIME type associated with mpv.js plugin.
+ */
+const PLUGIN_MIME_TYPE = "application/x-mpvjs";
 
 function containsNonASCII(str) {
   for (let i = 0; i < str.length; i++) {
@@ -35,7 +38,8 @@ function getPluginEntry(pluginDir, pluginName = "mpvjs.node") {
       pluginPath = `.${path.sep}${pluginPath}`;
     }
   } else {
-    // Relative plugin paths doesn't work on Windows.
+    // Relative plugin paths doesn't work reliably on Windows, see
+    // <https://github.com/Kagami/mpv.js/issues/9>.
     if (process.platform === "win32") {
       pluginPath = fullPluginPath;
     }
@@ -47,7 +51,7 @@ function getPluginEntry(pluginDir, pluginName = "mpvjs.node") {
       pluginPath = fullPluginPath;
     }
   }
-  return `${pluginPath};${MPVJS_MIME_TYPE}`;
+  return `${pluginPath};${PLUGIN_MIME_TYPE}`;
 }
 
 /**
@@ -166,7 +170,7 @@ class ReactMPV extends React.PureComponent {
     const defaultStyle = {display: "block", width: "100%", height: "100%"};
     const props = Object.assign({}, this.props, {
       ref: "plugin",
-      type: MPVJS_MIME_TYPE,
+      type: PLUGIN_MIME_TYPE,
       style: Object.assign(defaultStyle, this.props.style),
     });
     delete props.onReady;
@@ -205,4 +209,4 @@ ReactMPV.propTypes = {
   onPropertyChange: React.PropTypes.func,
 };
 
-module.exports = {getPluginEntry, ReactMPV};
+module.exports = {PLUGIN_MIME_TYPE, getPluginEntry, ReactMPV};
