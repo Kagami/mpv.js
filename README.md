@@ -122,7 +122,7 @@ You may use [lachs0r builds](https://mpv.srsfckn.biz/mpv-dev-latest.7z). Copy `m
 
 ### macOS
 
-[Homebrew](https://brew.sh/) can compile `libmpv.1.dylib` and all its dependencies. To find dylibs that need to be packaged and fix global paths you may use [collect-dylib-deps](scripts/collect-dylib-deps.sh) script.
+[Homebrew](https://brew.sh/) can compile `libmpv.1.dylib` and all its dependencies. To find dylibs that need to be packaged and fix install names you may use [collect-dylib-deps](scripts/collect-dylib-deps.sh) script.
 
 ### Linux
 
