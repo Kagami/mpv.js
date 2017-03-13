@@ -151,7 +151,7 @@ To workaround it you need to either replace `libffmpeg.so` with empty wrapper li
 gcc -shared -lavformat -o /path/to/libffmpeg.so
 ```
 
-**NOTE:** This doesn't work for Electron >= 1.4.15 due to [#268](https://github.com/electron/libchromiumcontent/issues/268).
+**NOTE:** This doesn't work for Electron >= 1.4.15 due to [#268](https://github.com/electron/libchromiumcontent/issues/268). See [here](https://github.com/Kagami/mpv.js/issues/10) for workaround.
 
 Or use libmpv with statically linked `libav*`.
 
