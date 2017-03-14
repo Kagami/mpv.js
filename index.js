@@ -27,6 +27,7 @@ function containsNonASCII(str) {
  *
  * @param {string} pluginDir - Plugin directory
  * @param {string} [pluginName=mpvjs.node] - Plugin name
+ * @throws {Error} Resulting path contains non-ASCII characters.
  */
 function getPluginEntry(pluginDir, pluginName = "mpvjs.node") {
   const fullPluginPath = path.join(pluginDir, pluginName);
