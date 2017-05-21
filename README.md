@@ -66,6 +66,16 @@ app.commandLine.appendSwitch("ignore-gpu-blacklist");
 app.commandLine.appendSwitch("register-pepper-plugins", getPluginEntry(pluginDir));
 ```
 
+Don't forget to enable `plugins` feature when creating `BrowserWindow`:
+
+```javascript
+const win = new BrowserWindow({
+  // ...
+  webPreferences: {plugins: true},
+  // ...
+});
+```
+
 ### Use MPV component (React example)
 
 ```javascript
