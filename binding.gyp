@@ -7,7 +7,7 @@
       "libraries": ["-lppapi", "-lppapi_cpp", "-lppapi_gles2"],
       "conditions": [
         ["OS=='win'", {
-          "include_dirs": ["C:/nacl_sdk/pepper_49/include", "C:/mpv-dev"],
+          "include_dirs": ["C:/nacl_sdk/pepper_49/include", "C:/mpv-dev/include"],
           "libraries": ["-llibmpv.dll.a"],
           "conditions": [
             ["target_arch=='ia32'", {

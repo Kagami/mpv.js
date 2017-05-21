@@ -188,7 +188,7 @@ See [download](https://developer.chrome.com/native-client/sdk/download) page.
 
 ### Step 3: setup mpv development files
 
-* Windows: download [mpv-dev](https://mpv.srsfckn.biz/mpv-dev-latest.7z), unpack to `C:\mpv-dev`, rename `include` to `mpv`
+* Windows: download [mpv-dev](https://mpv.srsfckn.biz/mpv-dev-latest.7z), unpack to `C:\mpv-dev`
 * macOS: `brew install mpv`
 * Linux: `apt-get install libmpv-dev`
 
