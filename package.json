@@ -33,7 +33,8 @@
     "url": "https://github.com/Kagami/mpv.js/issues"
   },
   "dependencies": {
-    "prebuild-install": "^2.1.1"
+    "prebuild-install": "^2.1.1",
+    "prop-types": "^15.5.10"
   },
   "peerDependencies": {
     "react": "^15.3.0"

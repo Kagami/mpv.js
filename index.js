@@ -7,6 +7,7 @@
 
 const path = require("path");
 const React = require("react");
+const PropTypes = require("prop-types");
 
 /**
  * The MIME type associated with mpv.js plugin.
@@ -188,18 +189,18 @@ ReactMPV.propTypes = {
   /**
    * The CSS class name of the plugin element.
    */
-  className: React.PropTypes.string,
+  className: PropTypes.string,
   /**
    * Override the inline-styles of the plugin element.
    */
-  style: React.PropTypes.object,
+  style: PropTypes.object,
   /**
    * Callback function that is fired when mpv is ready to accept
    * commands.
    *
    * @param {Object} mpv - Component instance
    */
-  onReady: React.PropTypes.func,
+  onReady: PropTypes.func,
   /**
    * Callback function that is fired when one of the observed properties
    * changes.
@@ -207,7 +208,7 @@ ReactMPV.propTypes = {
    * @param {string} name - Property name
    * @param {*} value - Property value
    */
-  onPropertyChange: React.PropTypes.func,
+  onPropertyChange: PropTypes.func,
 };
 
 module.exports = {PLUGIN_MIME_TYPE, getPluginEntry, ReactMPV};
