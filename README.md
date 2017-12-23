@@ -205,9 +205,7 @@ Feel free to PR your own.
 
 ## License
 
-mpv.js is licensed under [CC0](COPYING) itself, however mpv.js + libmpv build is meant to be distributed as GPLv2+ due to mpv [being GPL](https://github.com/mpv-player/mpv/blob/master/LICENSE) and GPL dynamic linking restrictions.
-
-It shouldn't affect entire Electron/NW.js app though because Chromium runs plugins inside separate process and GPL FAQ [doesn't restrict that](https://www.gnu.org/licenses/gpl-faq.html#NFUseGPLPlugins). (This is not a legal advice.)
+mpv.js is licensed under [CC0](COPYING) itself. However if you use GPL build of libmpv (e.g. lachs0r builds) your application might violate GPL dynamic linking restrictions. LGPL build should be safe, see [mpv copyright](https://github.com/mpv-player/mpv/blob/master/Copyright) for details. (This is not a legal advice.)
 
 Example video is part of Tears of Steel movie (CC) Blender Foundation | mango.blender.org.
 
