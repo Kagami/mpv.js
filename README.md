@@ -158,7 +158,7 @@ On Linux plugins loaded with `register-pepper-plugins` inherit symbols from `ele
 To workaround it you need to either replace `libffmpeg.so` with empty wrapper linked to `libav*`:
 
 ```bash
-gcc -shared -lavformat -o /path/to/libffmpeg.so
+gcc -Wl,--no-as-needed -shared -lavformat -o /path/to/libffmpeg.so
 ```
 
 Or use libmpv with statically linked `libav*`.
