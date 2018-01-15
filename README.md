@@ -25,7 +25,7 @@ In order to try mpv.js you need to install mpv library first.
 
 * Windows: download [mpv-dev](https://mpv.srsfckn.biz/mpv-dev-latest.7z), unpack, put corresponding `mpv-1.dll` to `C:\Windows\system32`
 * macOS: `brew install mpv`
-* Linux: `apt-get install libmpv1`
+* Linux: `apt-get install libmpv1 libavformat-dev`
 
 ## Example
 
