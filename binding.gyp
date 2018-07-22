@@ -13,12 +13,12 @@
             ["target_arch=='ia32'", {
               "library_dirs": [
                 "C:/nacl_sdk/pepper_49/lib/win_x86_32_host/Release",
-                "C:/mpv-dev/32",
+                "C:/mpv-dev/i686",
               ],
             }, "target_arch=='x64'", {
               "library_dirs": [
                 "C:/nacl_sdk/pepper_49/lib/win_x86_64_host/Release",
-                "C:/mpv-dev/64",
+                "C:/mpv-dev/x86_64",
               ],
             }],
           ],
