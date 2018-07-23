@@ -314,7 +314,6 @@ class MPVInstance : public pp::Instance {
       DIE("failed to set VO");
 
     // Some convenient defaults. Can be always changed on ready event.
-    mpv_set_option_string(mpv_, "vf-defaults", "yadif=interlaced-only=no");
     mpv_set_option_string(mpv_, "stop-playback-on-init-failure", "no");
     mpv_set_option_string(mpv_, "audio-file-auto", "no");
     mpv_set_option_string(mpv_, "sub-auto", "no");
