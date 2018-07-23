@@ -4,14 +4,20 @@ language: node_js
 node_js:
   - "node"
 before_install:
+  - sed -i '/"_from":/d' package.json
   - sudo dpkg --add-architecture i386
   - sudo add-apt-repository -y ppa:mc3man/testing6
   - sudo apt-get -y update
   - sudo apt-get install -y libc6:i386 libmpv-dev
-  - ( cd ~ && wget https://storage.googleapis.com/nativeclient-mirror/nacl/nacl_sdk/nacl_sdk.zip )
-  - ( cd ~ && unzip nacl_sdk.zip && cd nacl_sdk && ./naclsdk update )
-  - export NACL_SDK_ROOT=$HOME/nacl_sdk/pepper_49
-  - sed -i '/"_from":/d' package.json
+  - |
+    pushd ~
+    wget https://github.com/Kagami/nacl_sdk/archive/master.zip
+    unzip master.zip
+    mv nacl_sdk-master nacl_sdk
+    cd nacl_sdk
+    ./naclsdk update
+    export NACL_SDK_ROOT=$HOME/nacl_sdk/pepper_49
+    popd
 notifications:
   email:
     on_success: never
