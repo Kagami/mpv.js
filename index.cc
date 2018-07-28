@@ -177,9 +177,8 @@ class MPVInstance : public pp::Instance {
       pp::Var value = data_dict.Get("value");
       if (value.is_string()) {
         std::string value_string = value.AsString();
-        void* value_ptr = const_cast<void*>(
-            static_cast<const void*>(value_string.c_str()));
-        mpv_set_property(mpv_, name.c_str(), MPV_FORMAT_STRING, &value_ptr);
+        const char* value_cstr = value_string.c_str();
+        mpv_set_property(mpv_, name.c_str(), MPV_FORMAT_STRING, &value_cstr);
       } else if (value.is_bool()) {
         int value_bool = value.AsBool();
         mpv_set_property(mpv_, name.c_str(), MPV_FORMAT_FLAG, &value_bool);
