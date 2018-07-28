@@ -85,7 +85,7 @@ class Main extends React.PureComponent {
   handleLoad(e) {
     e.target.blur();
     const items = remote.dialog.showOpenDialog({filters: [
-      {name: "Videos", extensions: ["mkv", "mp4", "mov", "avi"]},
+      {name: "Videos", extensions: ["mkv", "webm", "mp4", "mov", "avi"]},
       {name: "All files", extensions: ["*"]},
     ]});
     if (items) {
