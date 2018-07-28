@@ -3,7 +3,7 @@
 const path = require("path");
 const {BrowserWindow, app} = require("electron");
 const {getPluginEntry} = require("../index");
-require("electron-debug")();
+require("electron-debug")({showDevTools: false});
 
 const pdir = path.join(__dirname, "..", "build", "Release");
 if (process.platform !== "linux") {process.chdir(pdir);}

@@ -148,9 +148,13 @@ class ReactMPV extends React.PureComponent {
    * @return {HTMLEmbedElement}
    */
   node() {
-    return this.refs.plugin;
+    return this.plugin;
   }
 
+  constructor(props) {
+    super(props);
+    this.plugin = null;
+  }
   _postData(type, data) {
     const msg = {type, data};
     this.node().postMessage(msg);
@@ -171,7 +175,7 @@ class ReactMPV extends React.PureComponent {
   render() {
     const defaultStyle = {display: "block", width: "100%", height: "100%"};
     const props = Object.assign({}, this.props, {
-      ref: "plugin",
+      ref: el => { this.plugin = el; },
       type: PLUGIN_MIME_TYPE,
       style: Object.assign(defaultStyle, this.props.style),
     });

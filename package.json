@@ -33,20 +33,20 @@
     "url": "https://github.com/Kagami/mpv.js/issues"
   },
   "dependencies": {
-    "prebuild-install": "^2.1.1",
-    "prop-types": "^15.5.10"
+    "prebuild-install": "^5.0.0",
+    "prop-types": "^15.6.2"
   },
   "peerDependencies": {
-    "react": "^15.3.0"
+    "react": "^15.3.0 || ^16.0.0"
   },
   "devDependencies": {
-    "babel-standalone": "^6.23.1",
-    "electron": "^1.6.8",
-    "electron-debug": "^1.1.0",
-    "eslint": "^3.17.0",
-    "eslint-plugin-react": "^6.10.0",
-    "prebuild": "^6.1.0",
-    "react": "^15.4.2",
-    "react-dom": "^15.4.2"
+    "babel-standalone": "^6.26.0",
+    "electron": "^1.8.7",
+    "electron-debug": "^2.0.0",
+    "eslint": "^5.2.0",
+    "eslint-plugin-react": "^7.10.0",
+    "prebuild": "^7.6.1",
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1"
   }
 }
