@@ -4,7 +4,7 @@
       "target_name": "mpvjs",
       "win_delay_load_hook": "false",
       "sources": ["index.cc"],
-      "libraries": ["-lppapi", "-lppapi_cpp", "-lppapi_gles2"],
+      "libraries": ["-lppapi_cpp", "-lppapi_gles2"],
       "conditions": [
         ["OS=='win'", {
           "include_dirs": ["C:/nacl_sdk/pepper_49/include", "C:/mpv-dev/include"],
