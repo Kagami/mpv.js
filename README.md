@@ -197,9 +197,11 @@ See [download](https://developer.chrome.com/native-client/sdk/download) page.
 * Run `node-gyp rebuild` in project directory
 * Run `node-gyp rebuild --arch=ia32` to build 32-bit version of plugin on 64-bit Windows
 
-## Build on Raspberry Pi 3
+## Build on ARM based SBCs (ARMhf7)
 
 **important** Electron 1.8.x ARM releases are broken [electron/electron#12329](https://github.com/electron/electron/issues/12329) use 2.x or 1.7.9 instead
+
+**note** instructions below have been tested on Raspberry Pi 3 [see more](https://github.com/Kagami/mpv.js/issues/32)
 
 ### Step 1: setup node-gyp
 See [installation](https://github.com/nodejs/node-gyp#installation) section.
