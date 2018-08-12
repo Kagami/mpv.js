@@ -163,7 +163,7 @@ gcc -Wl,--no-as-needed -shared -lavformat -o /path/to/libffmpeg.so
 
 Or use libmpv with statically linked `libav*`.
 
-## Build on Windows, macOS and Linux
+## Build on x86
 
 To build `mpvjs.node` by yourself you need to setup dev environment.
 
@@ -197,43 +197,40 @@ See [download](https://developer.chrome.com/native-client/sdk/download) page.
 * Run `node-gyp rebuild` in project directory
 * Run `node-gyp rebuild --arch=ia32` to build 32-bit version of plugin on 64-bit Windows
 
-## Build on ARM based SBCs (ARMhf7)
+## Build on ARM
 
-**important** Electron 1.8.x ARM releases are broken [electron/electron#12329](https://github.com/electron/electron/issues/12329) use 2.x or 1.7.9 instead
+**Important:** Electron 1.8.x ARM releases are [broken](https://github.com/electron/electron/issues/12329) so use 2.x or 1.7.x instead.
 
-**note** instructions below have been tested on Raspberry Pi 3 [see more](https://github.com/Kagami/mpv.js/issues/32)
+**Note:** instructions below have been tested on Raspberry Pi 3, [see more](https://github.com/Kagami/mpv.js/issues/32).
+
+### Step 0: enable hardware graphics acceleration
+
+* Run `sudo raspi-config`
+* Select **Advanced Options**, then select **GL Driver** and then **GL (Full KMS) OpenGL desktop driver with full KMS**. When configuration is finished you will see following message: "Full KMS GL driver is enabled"
+* Select `<Ok>` and then `<Finish>` and raspi-config tool will ask you if you would like to reboot
+* Select `<Yes>` to reboot the system and apply configuration changes
 
 ### Step 1: setup node-gyp
 
 See [installation](https://github.com/nodejs/node-gyp#installation) section.
 
-### Step 2: download pepper's archive for linux
+### Step 2: setup NaCl SDK
 
-[The NaCl SDK itself is only built to run on x86](https://groups.google.com/forum/#!topic/native-client-discuss/yrtiu63iBQ4), so you can't use `./naclsdk` instead you have to [download](https://storage.googleapis.com/nativeclient-mirror/nacl/nacl_sdk/49.0.2623.87/naclsdk_linux.tar.bz2) pepper's archive directly.
+[The NaCl SDK itself is only built to run on x86](https://groups.google.com/forum/#!topic/native-client-discuss/yrtiu63iBQ4), so you can't use `./naclsdk` instead you have to [download](https://storage.googleapis.com/nativeclient-mirror/nacl/nacl_sdk/49.0.2623.87/naclsdk_linux.tar.bz2) pepper's archive directly and unpack it to some directory.
+
+Then add `export NACL_SDK_ROOT=/path/to/pepper_49` to `~/.bash_profile`
 
 ### Step 3: setup mpv development files
 
 `apt-get install libmpv-dev`
 
-### Step 4: build pepper from source
+### Step 4: compile ARM host binaries
 
-* Remove [#L30](https://github.com/Kagami/mpv.js/blob/master/binding.gyp#L30) from `binding.gyp` Or add `-D_GLIBCXX_USE_CXX11_ABI=0` to pepper's CFLAGS.
-* Run following commands:
-  ```
-  $ cd /path/to/pepper_49/src
-  $ TOOLCHAIN=linux PROJECTS="ppapi_cpp ppapi_gles2" make
-  ```
+Run `cd /path/to/pepper_49/src` and `make TOOLCHAIN=linux PROJECTS="ppapi_cpp ppapi_gles2" CFLAGS="-D_GLIBCXX_USE_CXX11_ABI=0"`
 
 ### Step 5: build plugin
 
-After the process is done. head back to mpv.js directory and run `export NACL_SDK_ROOT=/path/to/pepper_49` and `node-gyp rebuild`.
-
-### Step 6: enable hardware graphics acceleration
-
-* Run `sudo raspi-config`
-* Select **Advanced Options**, then select **GL Driver** and then **GL (Full KMS) OpenGL desktop driver with full KMS**. When configuration is finished you will see following message: "Full KMS GL driver is enabled".  
-  Select `<Ok>` and then `<Finish>` and raspi-config tool will ask you if you would like to reboot.  
-  Select `<Yes>` to reboot the system and apply configuration changes.
+After the process is done, head back to mpv.js directory and run `node-gyp rebuild`.
 
 ## Applications using mpv.js
 
