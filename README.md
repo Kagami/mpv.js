@@ -230,8 +230,8 @@ After the process is done. head back to mpv.js directory and run `export NACL_SD
 
 ### Step 6: enable hardware graphics acceleration
 
-* run `sudo raspi-config`
-* select **Advanced Options**, then select **GL Driver** and then **GL (Full KMS) OpenGL desktop driver with full KMS**. When configuration is finished you will see following message: "Full KMS GL driver is enabled".  
+* Run `sudo raspi-config`
+* Select **Advanced Options**, then select **GL Driver** and then **GL (Full KMS) OpenGL desktop driver with full KMS**. When configuration is finished you will see following message: "Full KMS GL driver is enabled".  
   Select `<Ok>` and then `<Finish>` and raspi-config tool will ask you if you would like to reboot.  
   Select `<Yes>` to reboot the system and apply configuration changes.
 
