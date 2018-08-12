@@ -216,7 +216,7 @@ See [installation](https://github.com/nodejs/node-gyp#installation) section.
 
 ### Step 2: setup NaCl SDK
 
-The NaCl SDK itself is [only built to run on x86](https://groups.google.com/forum/#!topic/native-client-discuss/yrtiu63iBQ4), so you can't use `./naclsdk`. Instead you have to download [pepper's archive](https://storage.googleapis.com/nativeclient-mirror/nacl/nacl_sdk/49.0.2623.87/naclsdk_linux.tar.bz2) directly and unpack it to some directory. Then add `export NACL_SDK_ROOT=/path/to/pepper_49` to `~/.bash_profile`
+The NaCl SDK itself is [only built to run on x86](https://groups.google.com/forum/#!topic/native-client-discuss/yrtiu63iBQ4), so you can't use `./naclsdk`. Instead you have to download [pepper's archive](https://storage.googleapis.com/nativeclient-mirror/nacl/nacl_sdk/49.0.2623.87/naclsdk_linux.tar.bz2) directly and unpack it to some directory. Then add `export NACL_SDK_ROOT=/path/to/pepper_49` to `~/.bash_profile`.
 
 ### Step 3: setup mpv development files
 
@@ -224,7 +224,7 @@ The NaCl SDK itself is [only built to run on x86](https://groups.google.com/foru
 
 ### Step 4: compile ARM host binaries
 
-Run `cd /path/to/pepper_49/src` and `make TOOLCHAIN=linux PROJECTS="ppapi_cpp ppapi_gles2" CFLAGS="-D_GLIBCXX_USE_CXX11_ABI=0"`
+Run `cd /path/to/pepper_49/src` and `make TOOLCHAIN=linux PROJECTS="ppapi_cpp ppapi_gles2" CFLAGS="-D_GLIBCXX_USE_CXX11_ABI=0"`.
 
 ### Step 5: build plugin
 
