@@ -224,15 +224,14 @@ See [installation](https://github.com/nodejs/node-gyp#installation) section.
   $ TOOLCHAIN=linux PROJECTS="ppapi_cpp ppapi_gles2" make
   ```
 
-### Step 4: build plugin
+### Step 5: build plugin
 
 After the process is done. head back to mpv.js directory and run `export NACL_SDK_ROOT=/path/to/pepper_49` and `node-gyp rebuild`.
 
-### Step 5: enable hardware graphics acceleration
+### Step 6: enable hardware graphics acceleration
 
 * run `sudo raspi-config`
-* select **Advanced Options**, then select **GL Driver** and then **GL (Full KMS) OpenGL desktop driver with full KMS**. When configuration is finished you will see following message:  
-  "Full KMS GL driver is enabled".  
+* select **Advanced Options**, then select **GL Driver** and then **GL (Full KMS) OpenGL desktop driver with full KMS**. When configuration is finished you will see following message: "Full KMS GL driver is enabled".  
   Select `<Ok>` and then `<Finish>` and raspi-config tool will ask you if you would like to reboot.  
   Select `<Yes>` to reboot the system and apply configuration changes.
 
