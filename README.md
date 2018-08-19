@@ -184,7 +184,7 @@ See [download](https://developer.chrome.com/native-client/sdk/download) page.
 
 1. Open `C:\nacl_sdk\pepper_49\tools\host_vc.mk` and replace `32_host` with `64_host`
 2. Open cmd, run `"C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\vcvarsall.bat" amd64`
-3. Run `cd C:\nacl_sdk\pepper_49\src` and `make TOOLCHAIN=win`
+3. Run `cd C:\nacl_sdk\pepper_49\src` and `make TOOLCHAIN=win PROJECTS="ppapi_cpp ppapi_gles2"`
 
 ### Step 3: setup mpv development files
 
