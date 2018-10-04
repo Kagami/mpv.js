@@ -192,6 +192,9 @@ class MPVInstance : public pp::Instance {
     } else if (type == "observe_property") {
       std::string name = data.AsString();
       mpv_observe_property(mpv_, 0, name.c_str(), MPV_FORMAT_NODE);
+    } else if (type == "get_property_async") {
+      std::string name = data.AsString();
+      mpv_get_property_async(mpv_, 0, name.c_str(), MPV_FORMAT_NODE);
     }
   }
 
@@ -225,7 +228,8 @@ class MPVInstance : public pp::Instance {
       mpv_event* event = mpv_wait_event(mpv_, 0);
       // printf("@@@ EVENT %d\n", event->event_id);
       if (event->event_id == MPV_EVENT_NONE) break;
-      if (event->event_id == MPV_EVENT_PROPERTY_CHANGE) {
+      if (event->event_id == MPV_EVENT_PROPERTY_CHANGE ||
+        event->event_id == MPV_EVENT_GET_PROPERTY_REPLY) {
         HandleMPVPropertyChange(static_cast<mpv_event_property*>(event->data));
       }
     }
