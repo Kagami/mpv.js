@@ -233,6 +233,9 @@ After the process is done, head back to mpv.js directory and run `node-gyp rebui
 ## Applications using mpv.js
 
 * [boram](https://github.com/Kagami/boram)
+* [Arclight](https://github.com/mchome/arclight)
+* [Source Player](https://github.com/circleapps/sourceplayer)
+* [Torrent Player](https://github.com/Andro999b/torrent-player)
 
 Feel free to PR your own.
 
