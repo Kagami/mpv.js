@@ -1,4 +1,4 @@
-dist: trusty
+dist: xenial
 sudo: required
 language: node_js
 node_js:
@@ -6,9 +6,9 @@ node_js:
 before_install:
   - |
     sudo dpkg --add-architecture i386
-    sudo add-apt-repository -y ppa:mc3man/testing6
-    sudo apt-get -y update
-    sudo apt-get install -y libc6:i386 libmpv-dev
+    sudo apt-get -y update && sudo apt-get install -y libc6:i386
+    sudo sed -i 's/xenial/cosmic/' /etc/apt/sources.list
+    sudo apt-get -y update && sudo apt-get install -y libmpv-dev
   - |
     cd ~
     wget https://github.com/Kagami/nacl_sdk/archive/master.zip && unzip master.zip
