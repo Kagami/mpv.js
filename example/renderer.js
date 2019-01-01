@@ -40,6 +40,7 @@ class Main extends React.PureComponent {
     this.mpv = mpv;
     const observe = mpv.observe.bind(mpv);
     ["pause", "time-pos", "duration", "eof-reached"].forEach(observe);
+    this.mpv.property("hwdec", "auto");
     this.mpv.command("loadfile", path.join(__dirname, "tos.mkv"));
   }
   handlePropertyChange(name, value) {
@@ -103,7 +104,7 @@ class Main extends React.PureComponent {
         />
         <div className="controls">
           <button className="control" onClick={this.togglePause}>
-            {this.state.pause ? "▶" : "▮▮"}
+            {this.state.pause ? "▶" : "❚❚"}
           </button>
           <button className="control" onClick={this.handleStop}>■</button>
           <input

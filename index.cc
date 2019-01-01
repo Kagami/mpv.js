@@ -16,7 +16,7 @@
 #include <ppapi/lib/gl/gles2/gl2ext_ppapi.h>
 #include <ppapi/utility/completion_callback_factory.h>
 #include <mpv/client.h>
-#include <mpv/opengl_cb.h>
+#include <mpv/render_gl.h>
 
 // Fix for MSVS.
 #ifdef PostMessage
@@ -120,7 +120,7 @@ class MPVInstance : public pp::Instance {
   virtual ~MPVInstance() {
     if (mpv_gl_) {
       glSetCurrentContextPPAPI(context_.pp_resource());
-      mpv_opengl_cb_uninit_gl(mpv_gl_);
+      mpv_render_context_free(mpv_gl_);
     }
     mpv_terminate_destroy(mpv_);
   }
@@ -192,6 +192,9 @@ class MPVInstance : public pp::Instance {
     } else if (type == "observe_property") {
       std::string name = data.AsString();
       mpv_observe_property(mpv_, 0, name.c_str(), MPV_FORMAT_NODE);
+    } else if (type == "get_property_async") {
+      std::string name = data.AsString();
+      mpv_get_property_async(mpv_, 0, name.c_str(), MPV_FORMAT_NODE);
     }
   }
 
@@ -225,7 +228,8 @@ class MPVInstance : public pp::Instance {
       mpv_event* event = mpv_wait_event(mpv_, 0);
       // printf("@@@ EVENT %d\n", event->event_id);
       if (event->event_id == MPV_EVENT_NONE) break;
-      if (event->event_id == MPV_EVENT_PROPERTY_CHANGE) {
+      if (event->event_id == MPV_EVENT_PROPERTY_CHANGE ||
+        event->event_id == MPV_EVENT_GET_PROPERTY_REPLY) {
         HandleMPVPropertyChange(static_cast<mpv_event_property*>(event->data));
       }
     }
@@ -300,17 +304,17 @@ class MPVInstance : public pp::Instance {
     if (mpv_initialize(mpv_) < 0)
       DIE("mpv init failed");
 
-    mpv_gl_ = static_cast<mpv_opengl_cb_context*>(
-        mpv_get_sub_api(mpv_, MPV_SUB_API_OPENGL_CB));
-    if (!mpv_gl_)
-      DIE("failed to create mpv GL API handle");
-
     glSetCurrentContextPPAPI(context_.pp_resource());
-    if (mpv_opengl_cb_init_gl(mpv_gl_, NULL, GetProcAddressMPV, NULL) < 0)
-      DIE("failed to initialize mpv GL context");
 
-    if (mpv_set_option_string(mpv_, "vo", "opengl-cb") < 0)
-      DIE("failed to set VO");
+    mpv_opengl_init_params gl_init_params{GetProcAddressMPV, nullptr, nullptr};
+    mpv_render_param params[] = {
+        {MPV_RENDER_PARAM_API_TYPE, const_cast<char *>(MPV_RENDER_API_TYPE_OPENGL)},
+        {MPV_RENDER_PARAM_OPENGL_INIT_PARAMS, &gl_init_params},
+        {MPV_RENDER_PARAM_INVALID, nullptr}
+    };
+
+    if (mpv_render_context_create(&mpv_gl_, mpv_, params) < 0)
+      DIE("failed to initialize mpv GL context");
 
     // Some convenient defaults. Can be always changed on ready event.
     mpv_set_option_string(mpv_, "stop-playback-on-init-failure", "no");
@@ -325,7 +329,7 @@ class MPVInstance : public pp::Instance {
 
   void LoadMPV() {
     mpv_set_wakeup_callback(mpv_, HandleMPVWakeup, this);
-    mpv_opengl_cb_set_update_callback(mpv_gl_, HandleMPVUpdate, this);
+    mpv_render_context_set_update_callback(mpv_gl_, HandleMPVUpdate, this);
     PostData("ready", Var::Null());
   }
 
@@ -344,7 +348,16 @@ class MPVInstance : public pp::Instance {
     // XXX(Kagami): Race condition if another plugin sets different
     // context in between calls?
     glSetCurrentContextPPAPI(context_.pp_resource());
-    mpv_opengl_cb_draw(mpv_gl_, 0, width_, -height_);
+
+    mpv_opengl_fbo mpfbo{static_cast<int>(0), width_, height_, 0};
+    int flip_y{1};
+    mpv_render_param params[] = {
+        {MPV_RENDER_PARAM_OPENGL_FBO, &mpfbo},
+        {MPV_RENDER_PARAM_FLIP_Y, &flip_y},
+        {MPV_RENDER_PARAM_INVALID, nullptr}
+    };
+
+    mpv_render_context_render(mpv_gl_, params);
     context_.SwapBuffers(
         callback_factory_.NewCallback(&MPVInstance::PaintFinished));
   }
@@ -358,7 +371,7 @@ class MPVInstance : public pp::Instance {
   pp::CompletionCallbackFactory<MPVInstance> callback_factory_;
   pp::Graphics3D context_;
   mpv_handle* mpv_;
-  mpv_opengl_cb_context* mpv_gl_;
+  mpv_render_context* mpv_gl_;
   int32_t width_;
   int32_t height_;
   bool gl_ready_;
