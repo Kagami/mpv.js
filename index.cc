@@ -29,9 +29,29 @@
 
 using pp::Var;
 
+// Strip GL_EXT_texture_norm16 because it doesn't work but reported as
+// available in Chrome 61-64 (electron 2.x) thus broking e.g. 10-bit
+// videos in mpv.
+// Note that we have a small memory leak here because no one frees copy
+// of extension string but it shouldn't be a problem because this is
+// only called once at start.
+const GLubyte* myGetString(GLenum name) {
+  if (name == GL_EXTENSIONS) {
+    const char* exts = reinterpret_cast<const char*>(glGetString(name));
+    const char* sub = strstr(exts, " GL_EXT_texture_norm16");
+    if (!sub)
+      return reinterpret_cast<const GLubyte*>(exts);
+    char* my_exts = strdup(exts);
+    strcpy(my_exts + (sub - exts), sub + 22/*len of ext + space*/);
+    return reinterpret_cast<const GLubyte*>(my_exts);
+  } else {
+    return glGetString(name);
+  }
+}
+
 // PPAPI GLES implementation doesn't provide getProcAddress.
 static const std::unordered_map<std::string, void*> GL_CALLBACKS = {
-  GLCB(GetString),
+  { "glGetString", reinterpret_cast<void*>(myGetString) },
   GLCB(ActiveTexture),
   GLCB(AttachShader),
   GLCB(BindAttribLocation),
