@@ -30,6 +30,9 @@ class Main extends React.PureComponent {
   }
   handleKeyDown(e) {
     e.preventDefault();
+    if (e.key === " ") {
+      this.mpv.property("pause", !this.state.pause);
+    }
     if (e.key === "f" || (e.key === "Escape" && this.state.fullscreen)) {
       this.toggleFullscreen();
     } else if (this.state.duration) {

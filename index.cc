@@ -318,7 +318,7 @@ class MPVInstance : public pp::Instance {
       mpv_set_option_string(mpv_, "msg-level", "all=v");
 
     // Can't be set after initialize in mpv 0.18.
-    mpv_set_option_string(mpv_, "input-default-bindings", "yes");
+    mpv_set_option_string(mpv_, "no-input-default-bindings", "yes");
     mpv_set_option_string(mpv_, "pause", "yes");
 
     if (mpv_initialize(mpv_) < 0)
