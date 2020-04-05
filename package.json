@@ -5,9 +5,9 @@
   "main": "index.js",
   "_from": "",
   "scripts": {
-    "install": "prebuild-install -t 1.0.0 || node-gyp rebuild",
-    "build-env": "wget https://storage.googleapis.com/nativeclient-mirror/nacl/nacl_sdk/nacl_sdk.zip && unzip nacl_sdk.zip && ./nacl_sdk/naclsdk update",
-    "build": "cross-env NACL_SDK_ROOT=`pwd`/nacl_sdk/pepper_49 node-gyp rebuild",
+    "install": "prebuild-install -t 1.0.0 || npm run build-env && npm run build",
+    "build-env": "wget https://github.com/Kagami/nacl_sdk/archive/master.zip && unzip master.zip && nacl_sdk-master/naclsdk update",
+    "build": "cross-env NACL_SDK_ROOT=`pwd`/nacl_sdk-master/pepper_49 node-gyp rebuild",
     "test": "eslint .",
     "example": "electron example",
     "use-system-ffmpeg": "gcc -Wl,--no-as-needed -shared -lavformat -o node_modules/electron/dist/libffmpeg.so",
