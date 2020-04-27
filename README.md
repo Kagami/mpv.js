@@ -61,6 +61,8 @@ const {getPluginEntry} = require("mpv.js");
 const pluginDir = path.join(path.dirname(require.resolve("mpv.js")), "build", "Release");
 // See pitfalls section for details.
 if (process.platform !== "linux") {process.chdir(pluginDir);}
+// Fix for latest Electron.
+app.commandLine.appendSwitch("no-sandbox");
 // To support a broader number of systems.
 app.commandLine.appendSwitch("ignore-gpu-blacklist");
 app.commandLine.appendSwitch("register-pepper-plugins", getPluginEntry(pluginDir));

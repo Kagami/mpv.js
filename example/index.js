@@ -7,6 +7,7 @@ require("electron-debug")({showDevTools: false});
 
 const pdir = path.join(__dirname, "..", "build", "Release");
 if (process.platform !== "linux") {process.chdir(pdir);}
+app.commandLine.appendSwitch("no-sandbox");
 app.commandLine.appendSwitch("ignore-gpu-blacklist");
 app.commandLine.appendSwitch("register-pepper-plugins", getPluginEntry(pdir));
 
