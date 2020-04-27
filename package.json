@@ -45,7 +45,7 @@
     "electron-debug": "^2.0.0",
     "eslint": "^5.2.0",
     "eslint-plugin-react": "^7.10.0",
-    "prebuild": "^7.6.1",
+    "prebuild": "^10.0.0",
     "react": "^16.4.1",
     "react-dom": "^16.4.1"
   }
