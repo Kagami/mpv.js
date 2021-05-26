@@ -41,7 +41,7 @@
   },
   "devDependencies": {
     "babel-standalone": "^6.26.0",
-    "electron": "^1.8.8",
+    "electron": "^9.4.0",
     "electron-debug": "^2.0.0",
     "eslint": "^5.2.0",
     "eslint-plugin-react": "^7.10.0",
