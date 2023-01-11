@@ -326,7 +326,11 @@ class MPVInstance : public pp::Instance {
 
     glSetCurrentContextPPAPI(context_.pp_resource());
 
+#if MPV_CLIENT_API_VERSION < MPV_MAKE_VERSION(2, 0)
     mpv_opengl_init_params gl_init_params{GetProcAddressMPV, nullptr, nullptr};
+#else
+    mpv_opengl_init_params gl_init_params{GetProcAddressMPV, nullptr};
+#endif
     mpv_render_param params[] = {
         {MPV_RENDER_PARAM_API_TYPE, const_cast<char *>(MPV_RENDER_API_TYPE_OPENGL)},
         {MPV_RENDER_PARAM_OPENGL_INIT_PARAMS, &gl_init_params},
